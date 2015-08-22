@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:elevation="2dp"
+    android:orientation="vertical"
+    tools:ignore="UnusedAttribute">
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web|email"
+        android:lineSpacingExtra="3sp"
+        android:paddingBottom="@dimen/card_horizontal_margin"
+        android:paddingLeft="@dimen/card_horizontal_margin"
+        android:paddingRight="@dimen/card_horizontal_margin"
+        android:textColorLink="@color/colorPrimary"
+        android:textSize="@dimen/card_medium_text_size" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_separator_height"
+        android:background="@color/card_border" />
+
+    <edu.upc.fib.raco.widgets.Item xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/card_separator_padding"
+        android:paddingTop="@dimen/card_separator_padding"
+        app:itemIcon="@drawable/ic_action_open_in_browser" />
+
+</LinearLayout>
