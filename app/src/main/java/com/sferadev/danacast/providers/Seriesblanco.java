@@ -9,10 +9,10 @@ import java.io.IOException;
 public class Seriesblanco {
     public static Elements getSearchResults(String query) {
         try {
-            Document document = Jsoup.connect("http://seriesblanco.com/finder.php")
-                    .data("query", query)
+            Document document = Jsoup.connect("http://seriesblanco.com/search.php")
+                    .data("q1", query.replace(" ", "+"))
                     .post();
-            return document.select("a");
+            return document.getElementsByClass("post-header");
         } catch (IOException e) {
             e.printStackTrace();
         }
