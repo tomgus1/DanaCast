@@ -1,4 +1,4 @@
-package com.sferadev.danacast.providers;
+package com.sferadev.danacast.servers;
 
 import android.os.SystemClock;
 

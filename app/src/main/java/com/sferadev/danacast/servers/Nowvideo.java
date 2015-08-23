@@ -1,4 +1,4 @@
-package com.sferadev.danacast.providers;
+package com.sferadev.danacast.servers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
