@@ -2,17 +2,16 @@ package com.sferadev.danacast.cards;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.TextView;
 
 import com.sferadev.danacast.R;
-import com.sferadev.danacast.model.FeedModel;
+import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.utils.NetworkUtils;
 import com.sferadev.danacast.widgets.Card;
 import com.sferadev.danacast.widgets.Item;
 
 public class AdvancedCard extends Card {
 
-    public AdvancedCard(final Context context, final FeedModel feed) {
+    public AdvancedCard(final Context context, final EntryModel feed) {
         super(context);
 
         setTitle("Loading");
@@ -20,8 +19,8 @@ public class AdvancedCard extends Card {
 
         setTitle(feed.getTitle());
 
-        TextView description = (TextView) findLayoutViewById(R.id.description);
-        description.setText(feed.getDescription());
+        /*TextView description = (TextView) findLayoutViewById(R.id.description);
+        description.setText(feed.getDescription());*/
 
         Item button = (Item) findLayoutViewById(R.id.button);
         if (feed.getLink() != null) {
