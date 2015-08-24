@@ -3,10 +3,5 @@
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#004D40</color>
     <color name="colorAccent">#0091EA</color>
-
     <color name="card_text">#607D8B</color>
-    <color name="card_title_text">#607D8B</color>
-    <color name="card_border">#ffdedede</color>
-    <color name="card_background">#ffffffff</color>
-    <color name="item_pressed">#f8f8f8</color>
 </resources>

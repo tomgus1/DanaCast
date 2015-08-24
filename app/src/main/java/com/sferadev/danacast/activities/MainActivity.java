@@ -6,19 +6,32 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
 import com.sferadev.danacast.R;
+import com.sferadev.danacast.model.EntryModel;
+import com.sferadev.danacast.providers.Seriesblanco;
+import com.sferadev.danacast.utils.ContentUtils;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     VideoCastManager mCastManager;
-    private LinearLayout mCardsLayout;
     private SwipeRefreshLayout mRefresh;
     private MiniController mMini;
+
+    private ListView mListView;
+    private ArrayList<EntryModel> mArrayList;
+    private ArrayAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +47,26 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mCardsLayout = (LinearLayout) findViewById(R.id.cards_layout);
         mRefresh = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
 
         mRefresh.setColorSchemeResources(R.color.colorAccent);
         mRefresh.setOnRefreshListener(this);
 
+        mListView = (ListView) findViewById(R.id.listview);
+
+        mListView.setOnItemClickListener(this);
+
         mCastManager.reconnectSessionIfPossible();
+
+        mArrayList = Seriesblanco.getPopularContent();
+        List<String> items = new ArrayList<>();
+        for (EntryModel object : mArrayList) items.add(object.getTitle());
+        mAdapter = new ArrayAdapter<>(
+                this,
+                R.layout.list_row,
+                R.id.drawer_text,
+                items);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -75,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void run() {
                 mRefresh.setRefreshing(false);
-                //Refresh TODO
+                updateListview(Seriesblanco.getPopularContent());
             }
         }, 2500);
     }
@@ -93,4 +119,28 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         return super.onPrepareOptionsMenu(menu);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (mArrayList.get(position).getType()) {
+            case ContentUtils.TYPE_SHOW:
+                updateListview(Seriesblanco.getEpisodeList(mArrayList.get(position).getLink()));
+                break;
+            case ContentUtils.TYPE_EPISODE:
+                updateListview(Seriesblanco.getEpisodeLinks(mArrayList.get(position).getLink()));
+                break;
+            case ContentUtils.TYPE_LINK:
+                ContentUtils.loadIntentDialog(this, Seriesblanco.getExternalLink(mArrayList.get(position).getLink()));
+                break;
+        }
+    }
+
+    private void updateListview(ArrayList<EntryModel> entries) {
+        mArrayList = entries;
+        List<String> items = new ArrayList<>();
+        for (EntryModel object : mArrayList) items.add(object.getTitle());
+        mListView.setSelectionAfterHeaderView();
+        mAdapter.clear();
+        mAdapter.addAll(items);
+        mAdapter.notifyDataSetChanged();
+    }
 }

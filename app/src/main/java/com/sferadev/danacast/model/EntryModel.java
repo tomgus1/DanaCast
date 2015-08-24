@@ -2,16 +2,22 @@ package com.sferadev.danacast.model;
 
 public class EntryModel {
 
+    private int mType;
     private String mTitle, mURL, mPic;
 
-    public EntryModel(String title, String url, String picUrl) {
+    public EntryModel(int type, String title, String url, String picUrl) {
+        mType = type;
         mTitle = title;
         mURL = url;
         mPic = picUrl;
     }
 
-    public EntryModel() {
-        //empty constructor
+    public int getType() {
+        return mType;
+    }
+
+    public void setType(int type) {
+        mType = type;
     }
 
     public String getTitle() {

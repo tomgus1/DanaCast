@@ -1,6 +1,7 @@
 package com.sferadev.danacast.providers;
 
 import com.sferadev.danacast.model.EntryModel;
+import com.sferadev.danacast.utils.ContentUtils;
 
 import org.apache.commons.lang3.text.WordUtils;
 import org.jsoup.Jsoup;
@@ -26,7 +27,7 @@ public class Seriesblanco {
                         if (element.hasText()) {
                             String title = element.text();
                             String url = element.attr("abs:href");
-                            result.add(new EntryModel(title, url, null));
+                            result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, null));
                         }
                     }
                 } catch (IOException e) {
@@ -57,7 +58,7 @@ public class Seriesblanco {
                         String title = element.getElementsByTag("img").first().attr("title");
                         String url = element.getElementsByTag("a").first().attr("abs:href");
                         String pic = element.getElementsByTag("img").first().attr("src");
-                        result.add(new EntryModel(title, url, pic));
+                        result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, pic));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -89,7 +90,7 @@ public class Seriesblanco {
                             if (element.hasText()) {
                                 String title = element.text();
                                 String url = element.attr("abs:href");
-                                result.add(new EntryModel(title, url, null));
+                                result.add(new EntryModel(ContentUtils.TYPE_EPISODE, title, url, null));
                             }
                         }
                     }
@@ -124,7 +125,7 @@ public class Seriesblanco {
                             String url = element.getElementsByTag("a").first().attr("abs:href");
                             String language = element.getElementsByTag("img").get(0)
                                     .attr("src").replace("/banderas/", "").split("\\.")[0].toUpperCase();
-                            result.add(new EntryModel(title + "(" + language + ")", url, null));
+                            result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", url, null));
                         }
                     }
                 } catch (IOException e) {
@@ -142,7 +143,7 @@ public class Seriesblanco {
         }
     }
 
-    private static String getExternalLink(final String url) {
+    public static String getExternalLink(final String url) {
         final String[] result = {null};
         Thread thread = new Thread(new Runnable() {
             @Override
