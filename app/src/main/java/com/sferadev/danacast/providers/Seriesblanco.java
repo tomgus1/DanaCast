@@ -2,6 +2,7 @@ package com.sferadev.danacast.providers;
 
 import com.sferadev.danacast.model.EntryModel;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -88,6 +89,40 @@ public class Seriesblanco {
                             String title = element.text();
                             String url = element.attr("abs:href");
                             result.add(new EntryModel(title, url, null));
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+            return result;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<EntryModel> getEpisodeLinks(final String url) {
+        final ArrayList<EntryModel> result = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Document document = Jsoup.connect(url).get();
+                    Elements elements = document.getElementsByClass("zebra").first()
+                            .getElementsByTag("tr");
+                    for (Element element : elements) {
+                        if (!element.getElementsByTag("a").isEmpty()) {
+                            String title = WordUtils.capitalize(element.getElementsByTag("img").get(1)
+                                    .attr("src").replace("/servidores/", "").split("\\.")[0]);
+                            String url = element.getElementsByTag("a").first().attr("abs:href");
+                            String language = element.getElementsByTag("img").get(0)
+                                    .attr("src").replace("/banderas/", "").split("\\.")[0].toUpperCase();
+                            result.add(new EntryModel(title + "(" + language + ")", url, null));
                         }
                     }
                 } catch (IOException e) {
