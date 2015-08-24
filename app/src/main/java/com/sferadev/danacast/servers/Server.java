@@ -5,6 +5,7 @@ public class Server {
         try {
             if (url.contains("streamcloud")) return Streamcloud.getVideoPath(url);
             if (url.contains("nowvideo")) return Nowvideo.getVideoPath(url);
+            if (url.contains("rocvideo")) return Rocvideo.getVideoPath(url);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
