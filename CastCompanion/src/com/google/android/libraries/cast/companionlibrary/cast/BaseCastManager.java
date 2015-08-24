@@ -30,6 +30,8 @@ import android.os.SystemClock;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.MediaRouteActionProvider;
 import android.support.v7.app.MediaRouteButton;
+import android.support.v7.app.MediaRouteChooserDialog;
+import android.support.v7.app.MediaRouteChooserDialogFragment;
 import android.support.v7.app.MediaRouteDialogFactory;
 import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
@@ -344,7 +346,7 @@ public abstract class BaseCastManager
                 MenuItemCompat.getActionProvider(mediaRouteMenuItem);
         mediaRouteActionProvider.setRouteSelector(mMediaRouteSelector);
         if (getMediaRouteDialogFactory() != null) {
-            mediaRouteActionProvider.setDialogFactory(getMediaRouteDialogFactory());
+            mediaRouteActionProvider.setDialogFactory(new CustomMediaRouteDialogFactory());
         }
         return mediaRouteMenuItem;
     }
@@ -1131,6 +1133,26 @@ public abstract class BaseCastManager
      */
     public boolean isAnyRouteAvailable() {
         return mMediaRouterCallback.isRouteAvailable();
+    }
+
+    private static class CustomMediaRouteChooserDialog extends MediaRouteChooserDialog {
+        public CustomMediaRouteChooserDialog(Context context) {
+            super(context, android.R.style.Theme_DeviceDefault_Light_Dialog);
+        }
+    }
+
+    public static class CustomMediaRouteChooserDialogFragment extends MediaRouteChooserDialogFragment {
+        @Override
+        public MediaRouteChooserDialog onCreateChooserDialog(Context context, Bundle savedInstanceState) {
+            return new CustomMediaRouteChooserDialog(context);
+        }
+    }
+
+    private class CustomMediaRouteDialogFactory extends MediaRouteDialogFactory {
+        @Override
+        public MediaRouteChooserDialogFragment onCreateChooserDialogFragment() {
+            return new CustomMediaRouteChooserDialogFragment();
+        }
     }
 
     /**
