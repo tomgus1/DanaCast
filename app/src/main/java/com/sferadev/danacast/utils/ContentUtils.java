@@ -32,7 +32,7 @@ public class ContentUtils {
                 dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 dialog.setMessage("Loading. Please wait...");
                 dialog.setIndeterminate(true);
-                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
             }
 
@@ -44,9 +44,11 @@ public class ContentUtils {
 
             @Override
             protected void onPostExecute(Void result) {
-                dialog.dismiss();
-                if (finalUrl[0] == null) return;
-                loadOptionsDialog(context, finalUrl[0]);
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                    if (finalUrl[0] == null) return;
+                    loadOptionsDialog(context, finalUrl[0]);
+                }
             }
 
         };
