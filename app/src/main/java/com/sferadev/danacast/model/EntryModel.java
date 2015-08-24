@@ -1,16 +1,16 @@
 package com.sferadev.danacast.model;
 
-public class FeedModel {
+public class EntryModel {
 
-    private String mTitle, mURL, mDescription;
+    private String mTitle, mURL, mPic;
 
-    public FeedModel(String title, String url, String description) {
+    public EntryModel(String title, String url, String picUrl) {
         mTitle = title;
         mURL = url;
-        mDescription = description;
+        mPic = picUrl;
     }
 
-    public FeedModel() {
+    public EntryModel() {
         //empty constructor
     }
 
@@ -30,11 +30,11 @@ public class FeedModel {
         mURL = link;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public String getPictureUrl() {
+        return mPic;
     }
 
-    public void setDescription(String description) {
-        mDescription = description;
+    public void setPictureUrl(String picUrl) {
+        mPic = picUrl;
     }
 }
