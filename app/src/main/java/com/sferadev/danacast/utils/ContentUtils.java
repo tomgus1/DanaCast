@@ -78,7 +78,7 @@ public class ContentUtils {
         dialog.show();
     }
 
-    public static void loadVideoChromecast(Context context, String url) {
+    private static void loadVideoChromecast(Context context, String url) {
         if (!VideoCastManager.getInstance().isConnected()) return;
         MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
         mediaMetadata.putString(MediaMetadata.KEY_TITLE, url);
@@ -91,13 +91,13 @@ public class ContentUtils {
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
-    public static void loadVideoDownload(Context context, String url) {
+    private static void loadVideoDownload(Context context, String url) {
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         downloadManager.enqueue(request);
     }
 
-    public static void loadVideoExternal(Context context, String url) {
+    private static void loadVideoExternal(Context context, String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.parse(url), "video/*");
         context.startActivity(intent);
