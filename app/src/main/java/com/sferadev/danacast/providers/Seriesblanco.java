@@ -119,7 +119,7 @@ public class Seriesblanco {
                         if (!element.getElementsByTag("a").isEmpty()) {
                             String title = WordUtils.capitalize(element.getElementsByTag("img").get(1)
                                     .attr("src").replace("/servidores/", "").split("\\.")[0]);
-                            String url = element.getElementsByTag("a").first().attr("abs:href");
+                            String url = getExternalLink(element.getElementsByTag("a").first().attr("abs:href"));
                             String language = element.getElementsByTag("img").get(0)
                                     .attr("src").replace("/banderas/", "").split("\\.")[0].toUpperCase();
                             result.add(new EntryModel(title + "(" + language + ")", url, null));
@@ -134,6 +134,30 @@ public class Seriesblanco {
         try {
             thread.join();
             return result;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String getExternalLink(final String url) {
+        final String[] result = {null};
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Document document = Jsoup.connect(url).get();
+                    Element element = document.select("input[type=button]").first();
+                    result[0] = element.attr("onclick").split("\"")[1];
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+            return result[0];
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
