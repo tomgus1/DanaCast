@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onNewIntent(Intent intent) {
+        setIntent(intent);
         handleIntent(intent);
     }
 
@@ -165,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             mArrayList = Seriesblanco.getSearchResults(query);
+            updateListview(mArrayList);
         } else {
             mArrayList = Seriesblanco.getPopularContent();
         }
