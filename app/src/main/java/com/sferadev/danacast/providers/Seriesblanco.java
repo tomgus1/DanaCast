@@ -81,14 +81,16 @@ public class Seriesblanco {
             public void run() {
                 try {
                     Document document = Jsoup.connect(url).get();
-                    Elements elements = document.getElementsByClass("zebra").first()
-                            .getElementsByTag("tbody").first()
-                            .getElementsByTag("a");
-                    for (Element element : elements) {
-                        if (element.hasText()) {
-                            String title = element.text();
-                            String url = element.attr("abs:href");
-                            result.add(new EntryModel(title, url, null));
+                    Elements tables = document.getElementsByClass("zebra");
+                    for (Element table : tables) {
+                        Elements elements = table.getElementsByTag("tbody").first()
+                                .getElementsByTag("a");
+                        for (Element element : elements) {
+                            if (element.hasText()) {
+                                String title = element.text();
+                                String url = element.attr("abs:href");
+                                result.add(new EntryModel(title, url, null));
+                            }
                         }
                     }
                 } catch (IOException e) {
@@ -119,7 +121,7 @@ public class Seriesblanco {
                         if (!element.getElementsByTag("a").isEmpty()) {
                             String title = WordUtils.capitalize(element.getElementsByTag("img").get(1)
                                     .attr("src").replace("/servidores/", "").split("\\.")[0]);
-                            String url = getExternalLink(element.getElementsByTag("a").first().attr("abs:href"));
+                            String url = element.getElementsByTag("a").first().attr("abs:href");
                             String language = element.getElementsByTag("img").get(0)
                                     .attr("src").replace("/banderas/", "").split("\\.")[0].toUpperCase();
                             result.add(new EntryModel(title + "(" + language + ")", url, null));
