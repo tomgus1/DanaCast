@@ -38,4 +38,12 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <com.google.android.libraries.cast.companionlibrary.widgets.MiniController
+        android:id="@+id/miniController"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" >
+    </com.google.android.libraries.cast.companionlibrary.widgets.MiniController>
+
 </LinearLayout>
