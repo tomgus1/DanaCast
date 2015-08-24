@@ -1,11 +1,16 @@
 package com.sferadev.danacast.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -58,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         mCastManager.reconnectSessionIfPossible();
 
-        mArrayList = Seriesblanco.getPopularContent();
+        handleIntent(getIntent());
+
         List<String> items = new ArrayList<>();
         for (EntryModel object : mArrayList) items.add(object.getTitle());
         mAdapter = new ArrayAdapter<>(
@@ -94,6 +100,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    @Override
     public void onRefresh() {
         // Handle the refresh of mRefresh
         mRefresh.setRefreshing(true);
@@ -108,10 +119,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu, menu);
         mCastManager.addMediaRouterButton(menu, R.id.media_route_menu_item);
-        return true;
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = null;
+        if (searchItem != null) searchView = (SearchView) searchItem.getActionView();
+        if (searchView != null)
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -142,5 +159,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mAdapter.clear();
         mAdapter.addAll(items);
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            mArrayList = Seriesblanco.getSearchResults(query);
+        } else {
+            mArrayList = Seriesblanco.getPopularContent();
+        }
     }
 }
