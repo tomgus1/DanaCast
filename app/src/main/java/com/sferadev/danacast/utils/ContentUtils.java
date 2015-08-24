@@ -13,7 +13,6 @@ import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.sferadev.danacast.servers.Server;
-import com.sferadev.danacast.servers.Streamcloud;
 
 public class ContentUtils {
     public static final int TYPE_PROVIDER = 0;
@@ -84,7 +83,7 @@ public class ContentUtils {
         MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
         mediaMetadata.putString(MediaMetadata.KEY_TITLE, url);
         //mediaMetadata.addImage(new WebImage(Uri.parse(uriString)));
-        MediaInfo mSelectedMedia = new MediaInfo.Builder(Streamcloud.getVideoPath(url))
+        MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
                 .setContentType("video/mp4")
                 .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(mediaMetadata)
