@@ -16,6 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.github.snowdream.android.app.UpdateFormat;
+import com.github.snowdream.android.app.UpdateManager;
+import com.github.snowdream.android.app.UpdateOptions;
+import com.github.snowdream.android.app.UpdatePeriod;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
@@ -74,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 R.id.drawer_text,
                 items);
         mListView.setAdapter(mAdapter);
+
+        checkUpdates();
     }
 
     @Override
@@ -190,5 +196,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private int getProvider() {
         return PreferenceUtils.getPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER, 0);
+    }
+
+    private void checkUpdates() {
+        UpdateManager manager = new UpdateManager(this);
+        UpdateOptions options = new UpdateOptions.Builder(this)
+                .checkUrl("https://raw.githubusercontent.com/SferaDev/DanaCast/master/updates/update.json")
+                .updateFormat(UpdateFormat.JSON)
+                .updatePeriod(new UpdatePeriod(UpdatePeriod.EACH_TIME))
+                .checkPackageName(true)
+                .build();
+        manager.check(this, options);
     }
 }
