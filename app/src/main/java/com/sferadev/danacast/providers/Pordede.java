@@ -1,7 +1,5 @@
 package com.sferadev.danacast.providers;
 
-import android.util.Log;
-
 import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.utils.ContentUtils;
 
@@ -31,12 +29,9 @@ public class Pordede {
                             .select("div.ddItemContainer.modelContainer");
                     for (Element element : elements) {
                         String title = element.getElementsByClass("title").text();
-                        Log.d("Dana", title);
                         String url = element.select("a.defaultLink.extended").first().attr("abs:href");
-                        Log.d("Dana", url);
                         result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, null));
                     }
-                    Log.d("Dana", "Size: " + result.size());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
