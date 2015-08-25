@@ -21,8 +21,9 @@ import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
 import com.sferadev.danacast.R;
 import com.sferadev.danacast.model.EntryModel;
-import com.sferadev.danacast.providers.Seriesblanco;
+import com.sferadev.danacast.providers.Provider;
 import com.sferadev.danacast.utils.ContentUtils;
+import com.sferadev.danacast.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void run() {
                 mRefresh.setRefreshing(false);
-                updateListview(Seriesblanco.getPopularContent());
+                updateListview(Provider.getPopularContent(getProvider()));
             }
         }, 2500);
     }
@@ -140,14 +141,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (mArrayList.get(position).getType()) {
+            case ContentUtils.TYPE_PROVIDER:
+                PreferenceUtils.setPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER, position);
+                updateListview(Provider.getPopularContent(getProvider()));
+                break;
             case ContentUtils.TYPE_SHOW:
-                updateListview(Seriesblanco.getEpisodeList(mArrayList.get(position).getLink()));
+                updateListview(Provider.getEpisodeList(getProvider(), mArrayList.get(position).getLink()));
                 break;
             case ContentUtils.TYPE_EPISODE:
-                updateListview(Seriesblanco.getEpisodeLinks(mArrayList.get(position).getLink()));
+                updateListview(Provider.getEpisodeLinks(getProvider(), mArrayList.get(position).getLink()));
                 break;
             case ContentUtils.TYPE_LINK:
-                ContentUtils.loadIntentDialog(this, Seriesblanco.getExternalLink(mArrayList.get(position).getLink()));
+                ContentUtils.loadIntentDialog(this, Provider.getExternalLink(getProvider(), mArrayList.get(position).getLink()));
                 break;
         }
     }
@@ -156,6 +161,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mArrayList = entries;
         List<String> items = new ArrayList<>();
         for (EntryModel object : mArrayList) items.add(object.getTitle());
+        updateListview(items);
+    }
+
+    private void updateListview(List<String> items) {
         mListView.setSelectionAfterHeaderView();
         mAdapter.clear();
         mAdapter.addAll(items);
@@ -165,10 +174,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            mArrayList = Seriesblanco.getSearchResults(query);
+            mArrayList = Provider.getSearchResults(getProvider(), query);
             updateListview(mArrayList);
         } else {
-            mArrayList = Seriesblanco.getPopularContent();
+            mArrayList = Provider.getProviders();
         }
+    }
+
+    private int getProvider() {
+        return PreferenceUtils.getPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER, 0);
     }
 }

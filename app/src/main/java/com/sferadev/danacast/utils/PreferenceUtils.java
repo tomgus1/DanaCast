@@ -5,11 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class PreferenceUtils {
-    public static final String PROPERTY_LOGIN_USER = "loginUser";
-    public static final String PROPERTY_LOGIN_PASS = "loginPass";
-    public static final String PROPERTY_USER_NAME = "userName";
-    public static final String PROPERTY_USER_MAIL = "userMail";
-    public static final String PROPERTY_LAST_FRAGMENT = "lastFragment";
+    public static final String PROPERTY_PORDEDE_USER = "pordedeUser";
+    public static final String PROPERTY_PORDEDE_PASS = "pordedePass";
+    public static final String PROPERTY_LAST_PROVIDER = "lastProvider";
 
     public static String getPreference(Context context, String key, String defaultValue) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
