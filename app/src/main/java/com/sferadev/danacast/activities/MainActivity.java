@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void run() {
                 mRefresh.setRefreshing(false);
-                updateListview(Provider.getPopularContent(getProvider()));
+                updateListview(Provider.getProviders());
             }
         }, 2500);
     }
