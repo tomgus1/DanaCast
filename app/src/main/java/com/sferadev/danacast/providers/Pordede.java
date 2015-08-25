@@ -125,10 +125,10 @@ public class Pordede {
                     for (Element element : elements) {
                         String title = WordUtils.capitalize(element.getElementsByClass("hostimage").first()
                                 .child(0).attr("src").replace("http://www.pordede.com/images/hosts/popup_", "").split("\\.")[0]);
-                        String url = element.attr("abs:href");
+                        String linkUrl = element.attr("abs:href");
                         String language = WordUtils.capitalize(element.getElementsByClass("flags").first()
                                 .child(0).classNames().toArray()[1].toString());
-                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", url, null));
+                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

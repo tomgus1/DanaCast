@@ -56,9 +56,9 @@ public class Seriesblanco {
                             .getElementsByTag("li");
                     for (Element element : elements) {
                         String title = element.getElementsByTag("img").first().attr("title");
-                        String url = element.getElementsByTag("a").first().attr("abs:href");
+                        String showUrl = element.getElementsByTag("a").first().attr("abs:href");
                         String pic = element.getElementsByTag("img").first().attr("src");
-                        result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, pic));
+                        result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, showUrl, pic));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -89,8 +89,8 @@ public class Seriesblanco {
                         for (Element element : elements) {
                             if (element.hasText()) {
                                 String title = element.text();
-                                String url = element.attr("abs:href");
-                                result.add(new EntryModel(ContentUtils.TYPE_EPISODE, title, url, null));
+                                String episodeUrl = element.attr("abs:href");
+                                result.add(new EntryModel(ContentUtils.TYPE_EPISODE, title, episodeUrl, null));
                             }
                         }
                     }
@@ -122,10 +122,10 @@ public class Seriesblanco {
                         if (!element.getElementsByTag("a").isEmpty()) {
                             String title = WordUtils.capitalize(element.getElementsByTag("img").get(1)
                                     .attr("src").replace("/servidores/", "").split("\\.")[0]);
-                            String url = element.getElementsByTag("a").first().attr("abs:href");
+                            String linkUrl = element.getElementsByTag("a").first().attr("abs:href");
                             String language = element.getElementsByTag("img").get(0)
                                     .attr("src").replace("/banderas/", "").split("\\.")[0].toUpperCase();
-                            result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", url, null));
+                            result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
                         }
                     }
                 } catch (IOException e) {
