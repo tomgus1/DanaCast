@@ -1,5 +1,7 @@
 package com.sferadev.danacast.providers;
 
+import android.content.Context;
+
 import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.utils.ContentUtils;
 
@@ -16,60 +18,84 @@ public class Provider {
         return items;
     }
 
-    public static ArrayList<EntryModel> getSearchResults(int provider, String query) {
+    public static ArrayList<EntryModel> getSearchResults(Context context, int provider, String query) {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getSearchResults(query);
             case PROVIDER_PORDEDE:
-                return Pordede.getSearchResults(query);
+                if (!Pordede.isLoggedInCredentials(context)) {
+                    Pordede.loginWithCredentials(context);
+                    return getProviders();
+                }
+                return Pordede.getSearchResults(context, query);
         }
-        return null;
+        return getProviders();
     }
 
-    public static ArrayList<EntryModel> getPopularContent(int provider) {
+    public static ArrayList<EntryModel> getPopularContent(Context context, int provider) {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getPopularContent();
             case PROVIDER_PORDEDE:
-                return Pordede.getPopularContent();
+                if (!Pordede.isLoggedInCredentials(context)) {
+                    Pordede.loginWithCredentials(context);
+                    return getProviders();
+                }
+                return Pordede.getPopularContent(context);
         }
-        return null;
+        return getProviders();
     }
 
-    public static ArrayList<EntryModel> getEpisodeList(int provider, String url) {
+    public static ArrayList<EntryModel> getEpisodeList(Context context, int provider, String url) {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getEpisodeList(url);
             case PROVIDER_PORDEDE:
-                return Pordede.getEpisodeList(url);
+                if (!Pordede.isLoggedInCredentials(context)) {
+                    Pordede.loginWithCredentials(context);
+                    return getProviders();
+                }
+                return Pordede.getEpisodeList(context, url);
         }
-        return null;
+        return getProviders();
     }
 
-    public static ArrayList<EntryModel> getEpisodeLinks(int provider, String url) {
+    public static ArrayList<EntryModel> getEpisodeLinks(Context context, int provider, String url) {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getEpisodeLinks(url);
             case PROVIDER_PORDEDE:
-                return Pordede.getEpisodeLinks(url);
+                if (!Pordede.isLoggedInCredentials(context)) {
+                    Pordede.loginWithCredentials(context);
+                    return getProviders();
+                }
+                return Pordede.getEpisodeLinks(context, url);
         }
-        return null;
+        return getProviders();
     }
 
-    public static ArrayList<EntryModel> getMovieLinks(int provider, String url) {
+    public static ArrayList<EntryModel> getMovieLinks(Context context, int provider, String url) {
         switch (provider) {
             case PROVIDER_PORDEDE:
-                return Pordede.getMovieLinks(url);
+                if (!Pordede.isLoggedInCredentials(context)) {
+                    Pordede.loginWithCredentials(context);
+                    return getProviders();
+                }
+                return Pordede.getMovieLinks(context, url);
         }
-        return null;
+        return getProviders();
     }
 
-    public static String getExternalLink(int provider, String url) {
+    public static String getExternalLink(Context context, int provider, String url) {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getExternalLink(url);
             case PROVIDER_PORDEDE:
-                return Pordede.getExternalLink(url);
+                if (!Pordede.isLoggedInCredentials(context)) {
+                    Pordede.loginWithCredentials(context);
+                    return null;
+                }
+                return Pordede.getExternalLink(context, url);
         }
         return null;
     }

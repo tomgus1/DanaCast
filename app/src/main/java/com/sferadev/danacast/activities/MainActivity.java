@@ -143,19 +143,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (mArrayList.get(position).getType()) {
             case ContentUtils.TYPE_PROVIDER:
                 PreferenceUtils.setPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER, position);
-                updateListview(Provider.getPopularContent(getProvider()));
+                updateListview(Provider.getPopularContent(this, getProvider()));
                 break;
             case ContentUtils.TYPE_SHOW:
-                updateListview(Provider.getEpisodeList(getProvider(), mArrayList.get(position).getLink()));
+                updateListview(Provider.getEpisodeList(this, getProvider(), mArrayList.get(position).getLink()));
                 break;
             case ContentUtils.TYPE_EPISODE:
-                updateListview(Provider.getEpisodeLinks(getProvider(), mArrayList.get(position).getLink()));
+                updateListview(Provider.getEpisodeLinks(this, getProvider(), mArrayList.get(position).getLink()));
                 break;
             case ContentUtils.TYPE_MOVIE:
-                updateListview(Provider.getMovieLinks(getProvider(), mArrayList.get(position).getLink()));
+                updateListview(Provider.getMovieLinks(this, getProvider(), mArrayList.get(position).getLink()));
                 break;
             case ContentUtils.TYPE_LINK:
-                ContentUtils.loadIntentDialog(this, Provider.getExternalLink(getProvider(),
+                ContentUtils.loadIntentDialog(this, Provider.getExternalLink(this, getProvider(),
                         mArrayList.get(position).getLink()));
                 break;
         }
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            mArrayList = Provider.getSearchResults(getProvider(), query);
+            mArrayList = Provider.getSearchResults(this, getProvider(), query);
             updateListview(mArrayList);
         } else {
             mArrayList = Provider.getProviders();

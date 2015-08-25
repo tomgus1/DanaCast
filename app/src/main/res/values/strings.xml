@@ -2,4 +2,10 @@
     <string name="app_id">51F78DE7</string>
     <string name="app_name">DanaCast</string>
     <string name="media_route_menu_title">Play on&#8230;</string>
+
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_signin">Sign In</string>
+    <string name="login_success">Login has been successful.</string>
+    <string name="login_failure">User or password is not correct.</string>
 </resources>
