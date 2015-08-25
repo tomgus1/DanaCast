@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
@@ -45,7 +46,10 @@ public class ContentUtils {
             protected void onPostExecute(Void result) {
                 if (dialog.isShowing()) {
                     dialog.dismiss();
-                    if (finalUrl[0] == null) return;
+                    if (finalUrl[0] == null) {
+                        Toast.makeText(context, "The requested link doesn't work", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     loadOptionsDialog(context, finalUrl[0]);
                 }
             }
