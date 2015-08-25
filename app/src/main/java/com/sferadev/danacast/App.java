@@ -1,11 +1,11 @@
 package com.sferadev.danacast;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.player.VideoCastControllerActivity;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     @Override
     public void onCreate() {
