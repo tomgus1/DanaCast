@@ -7,7 +7,7 @@
     "versionName": "1.0.2",
     "forceUpdate": false,
     "autoUpdate": true,
-    "apkUrl": "https://raw.githubusercontent.com/SferaDev/DanaCast/master/updates/102.apk",
+    "apkUrl": "https://raw.githubusercontent.com/SferaDev/DanaCast/master/updates/latest.apk",
     "updateTips": {
       "default": ""
     }
