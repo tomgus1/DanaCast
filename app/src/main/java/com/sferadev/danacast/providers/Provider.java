@@ -56,6 +56,14 @@ public class Provider {
         return null;
     }
 
+    public static ArrayList<EntryModel> getMovieLinks(int provider, String url) {
+        switch (provider) {
+            case PROVIDER_PORDEDE:
+                return Pordede.getMovieLinks(url);
+        }
+        return null;
+    }
+
     public static String getExternalLink(int provider, String url) {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:

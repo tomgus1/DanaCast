@@ -30,9 +30,11 @@ public class Pordede {
                     for (Element element : elements) {
                         String title = element.getElementsByClass("title").text();
                         String url = element.select("a.defaultLink.extended").first().attr("abs:href");
-                        result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, null));
+                        boolean isShow = element.getElementsByClass("searchType").text().equals("Serie");
+                        result.add(new EntryModel(isShow ? ContentUtils.TYPE_SHOW : ContentUtils.TYPE_MOVIE,
+                                title, url, null));
                     }
-                } catch (IOException e) {
+                } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
             }
@@ -117,6 +119,43 @@ public class Pordede {
             public void run() {
                 try {
                     Document document = Jsoup.connect(url)
+                            .cookies(loginResponse().cookies())
+                            .referrer("http://www.google.com")
+                            .get();
+                    Elements elements = document.select("div.linksContainer.online.tabContent").first()
+                            .select("a.a.aporteLink.done");
+                    for (Element element : elements) {
+                        String title = WordUtils.capitalize(element.getElementsByClass("hostimage").first()
+                                .child(0).attr("src").replace("http://www.pordede.com/images/hosts/popup_", "").split("\\.")[0]);
+                        String linkUrl = element.attr("abs:href");
+                        String language = WordUtils.capitalize(element.getElementsByClass("flags").first()
+                                .child(0).classNames().toArray()[1].toString());
+                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+            return result;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<EntryModel> getMovieLinks(final String url) {
+        final ArrayList<EntryModel> result = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String[] splitUrl = url.split("\\/");
+                    Document document = Jsoup.connect("http://www.pordede.com/links/view/slug/" +
+                            splitUrl[splitUrl.length - 1] + "/what/peli")
                             .cookies(loginResponse().cookies())
                             .referrer("http://www.google.com")
                             .get();

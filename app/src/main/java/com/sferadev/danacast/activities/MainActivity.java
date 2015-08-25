@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case ContentUtils.TYPE_EPISODE:
                 updateListview(Provider.getEpisodeLinks(getProvider(), mArrayList.get(position).getLink()));
                 break;
+            case ContentUtils.TYPE_MOVIE:
+                updateListview(Provider.getMovieLinks(getProvider(), mArrayList.get(position).getLink()));
+                break;
             case ContentUtils.TYPE_LINK:
                 ContentUtils.loadIntentDialog(this, Provider.getExternalLink(getProvider(),
                         mArrayList.get(position).getLink()));

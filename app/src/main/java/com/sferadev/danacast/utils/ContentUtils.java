@@ -20,6 +20,7 @@ public class ContentUtils {
     public static final int TYPE_SHOW = 1;
     public static final int TYPE_EPISODE = 2;
     public static final int TYPE_LINK = 3;
+    public static final int TYPE_MOVIE = 4;
 
     static String[] dialogOptions = {"Chromecast", "Download", "Open with..."};
 
