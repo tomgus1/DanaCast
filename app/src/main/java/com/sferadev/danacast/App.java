@@ -1,6 +1,6 @@
 package com.sferadev.danacast;
 
-import android.support.multidex.MultiDexApplication;
+import android.app.Application;
 
 import com.github.snowdream.android.app.UpdateFormat;
 import com.github.snowdream.android.app.UpdateManager;
@@ -9,7 +9,7 @@ import com.github.snowdream.android.app.UpdatePeriod;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.player.VideoCastControllerActivity;
 
-public class App extends MultiDexApplication {
+public class App extends Application {
 
     @Override
     public void onCreate() {
