@@ -1,0 +1,17 @@
+{
+  "updateInfo": {
+    "appName": "DanaCast",
+    "appDescription": "Watch TV Series and Movies on Android",
+    "packageName": "com.sferadev.danacast",
+    "versionCode": "1",
+    "versionName": "1.0",
+    "forceUpdate": false,
+    "autoUpdate": true,
+    "apkUrl": "",
+    "updateTips": {
+      "default": "Initial Auto-update release",
+      "en": "Initial Auto-update release",
+      "es": "Initial Auto-update release"
+    }
+  }
+}
