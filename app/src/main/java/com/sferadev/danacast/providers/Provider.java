@@ -21,8 +21,7 @@ public class Provider {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getSearchResults(query);
             case PROVIDER_PORDEDE:
-                //TODO
-                break;
+                return Pordede.getSearchResults(query);
         }
         return null;
     }
@@ -32,8 +31,7 @@ public class Provider {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getPopularContent();
             case PROVIDER_PORDEDE:
-                //TODO
-                break;
+                return Pordede.getPopularContent();
         }
         return null;
     }
@@ -43,8 +41,7 @@ public class Provider {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getEpisodeList(url);
             case PROVIDER_PORDEDE:
-                //TODO
-                break;
+                return Pordede.getEpisodeList(url);
         }
         return null;
     }
@@ -54,8 +51,7 @@ public class Provider {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getEpisodeLinks(url);
             case PROVIDER_PORDEDE:
-                //TODO
-                break;
+                return Pordede.getEpisodeLinks(url);
         }
         return null;
     }
@@ -65,8 +61,7 @@ public class Provider {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getExternalLink(url);
             case PROVIDER_PORDEDE:
-                //TODO
-                break;
+                return Pordede.getExternalLink(url);
         }
         return null;
     }
