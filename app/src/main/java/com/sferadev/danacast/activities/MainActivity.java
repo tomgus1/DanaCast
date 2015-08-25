@@ -146,13 +146,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 updateListview(Provider.getPopularContent(this, getProvider()));
                 break;
             case ContentUtils.TYPE_SHOW:
-                updateListview(Provider.getEpisodeList(this, getProvider(), mArrayList.get(position).getLink()));
+                ArrayList<EntryModel> episodes = Provider.getEpisodeList(this, getProvider(), mArrayList.get(position).getLink());
+                if (!episodes.isEmpty()) updateListview(episodes);
                 break;
             case ContentUtils.TYPE_EPISODE:
-                updateListview(Provider.getEpisodeLinks(this, getProvider(), mArrayList.get(position).getLink()));
+                ArrayList<EntryModel> episodeLinks = Provider.getEpisodeLinks(this, getProvider(), mArrayList.get(position).getLink());
+                if (!episodeLinks.isEmpty()) updateListview(episodeLinks);
                 break;
             case ContentUtils.TYPE_MOVIE:
-                updateListview(Provider.getMovieLinks(this, getProvider(), mArrayList.get(position).getLink()));
+                ArrayList<EntryModel> movieLinks = Provider.getMovieLinks(this, getProvider(), mArrayList.get(position).getLink());
+                if (!movieLinks.isEmpty()) updateListview(movieLinks);
                 break;
             case ContentUtils.TYPE_LINK:
                 ContentUtils.loadIntentDialog(this, Provider.getExternalLink(this, getProvider(),
