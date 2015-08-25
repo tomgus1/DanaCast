@@ -27,6 +27,10 @@ public class ContentUtils {
     public static void loadIntentDialog(final Context context, final String url) {
         final String[] finalUrl = new String[1];
         final ProgressDialog dialog = new ProgressDialog(context);
+        if (!Server.isSupported(url)) {
+            NetworkUtils.openChromeTab(context, url);
+            return;
+        }
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
