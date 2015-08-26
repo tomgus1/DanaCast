@@ -23,6 +23,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -308,11 +309,11 @@ public class VideoCastNotificationService extends Service {
 
         NotificationCompat.Builder builder
                 = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_action_notification)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(metadata.getString(MediaMetadata.KEY_TITLE))
                 .setContentText(castingTo)
                 .setContentIntent(contentPendingIntent)
-                .setLargeIcon(bitmap)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .addAction(isPlaying ? pauseOrStopResourceId
                                 : R.drawable.ic_notification_play_48dp,
                         getString(pauseOrPlayTextResourceId), playbackPendingIntent)
