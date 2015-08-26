@@ -22,6 +22,7 @@ public class ContentUtils {
     public static final int TYPE_EPISODE = 2;
     public static final int TYPE_LINK = 3;
     public static final int TYPE_MOVIE = 4;
+    public static final int TYPE_SONG = 5;
 
     private static final String[] dialogOptions = {"Chromecast", "Download", "Open in Browser", "Open with..."};
 
@@ -73,16 +74,24 @@ public class ContentUtils {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                loadVideoChromecast(context, entry, url);
+                                if (entry.getType() == TYPE_SONG) {
+                                    loadAudioChromecast(context, entry, url);
+                                } else {
+                                    loadVideoChromecast(context, entry, url);
+                                }
                                 break;
                             case 1:
-                                loadVideoDownload(context, url);
+                                loadFileDownload(context, url);
                                 break;
                             case 2:
                                 NetworkUtils.openChromeTab(context, url);
                                 break;
                             case 3:
-                                loadVideoExternal(context, url);
+                                if (entry.getType() == TYPE_SONG) {
+                                    loadAudioExternal(context, url);
+                                } else {
+                                    loadVideoExternal(context, url);
+                                }
                                 break;
                         }
                     }
@@ -104,7 +113,7 @@ public class ContentUtils {
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
-    private static void loadVideoDownload(Context context, String url) {
+    private static void loadFileDownload(Context context, String url) {
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         downloadManager.enqueue(request);
@@ -113,6 +122,25 @@ public class ContentUtils {
     private static void loadVideoExternal(Context context, String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.parse(url), "video/*");
+        context.startActivity(intent);
+    }
+
+    public static void loadAudioChromecast(Context context, EntryModel entry, String url) {
+        if (!VideoCastManager.getInstance().isConnected()) return;
+        MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_MUSIC_TRACK);
+        mediaMetadata.putString(MediaMetadata.KEY_TITLE, entry.getTitle());
+        mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
+        MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
+                .setContentType("audio/mp3")
+                .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
+                .setMetadata(mediaMetadata)
+                .build();
+        VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
+    }
+
+    private static void loadAudioExternal(Context context, String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse(url), "audio/*");
         context.startActivity(intent);
     }
 }

@@ -11,12 +11,14 @@ public class Provider {
     private static final int PROVIDER_SERIESBLANCO = 0;
     private static final int PROVIDER_PORDEDE = 1;
     private static final int PROVIDER_JKANIME = 2;
+    private static final int PROVIDER_MUSIC163 = 3;
 
     public static ArrayList<EntryModel> getProviders() {
         ArrayList<EntryModel> items = new ArrayList<>();
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesBlanco", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Pordede", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "JKAnime", null, null));
+        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Music163", null, null));
         return items;
     }
 
@@ -32,6 +34,8 @@ public class Provider {
                 return Pordede.getSearchResults(context, query);
             case PROVIDER_JKANIME:
                 return Jkanime.getSearchResults(query);
+            case PROVIDER_MUSIC163:
+                return Music163.getSearchResults(query);
         }
         return getProviders();
     }
@@ -48,6 +52,8 @@ public class Provider {
                 return Pordede.getPopularContent(context);
             case PROVIDER_JKANIME:
                 return Jkanime.getPopularContent();
+            case PROVIDER_MUSIC163:
+                return Music163.getPopularContent();
         }
         return getProviders();
     }
@@ -108,6 +114,8 @@ public class Provider {
                 return Pordede.getExternalLink(context, url);
             case PROVIDER_JKANIME:
                 return Jkanime.getExternalLink(url);
+            case PROVIDER_MUSIC163:
+                return Music163.getExternalLink(url);
         }
         return null;
     }
