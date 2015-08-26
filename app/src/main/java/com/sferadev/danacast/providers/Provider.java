@@ -10,11 +10,13 @@ import java.util.ArrayList;
 public class Provider {
     private static final int PROVIDER_SERIESBLANCO = 0;
     private static final int PROVIDER_PORDEDE = 1;
+    private static final int PROVIDER_JKANIME = 2;
 
     public static ArrayList<EntryModel> getProviders() {
         ArrayList<EntryModel> items = new ArrayList<>();
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesBlanco", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Pordede", null, null));
+        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "JKAnime", null, null));
         return items;
     }
 
@@ -42,6 +44,8 @@ public class Provider {
                     return getProviders();
                 }
                 return Pordede.getPopularContent(context);
+            case PROVIDER_JKANIME:
+                return Jkanime.getPopularContent();
         }
         return getProviders();
     }
@@ -56,6 +60,8 @@ public class Provider {
                     return getProviders();
                 }
                 return Pordede.getEpisodeList(context, url);
+            case PROVIDER_JKANIME:
+                return Jkanime.getEpisodeList(url);
         }
         return getProviders();
     }
@@ -70,6 +76,8 @@ public class Provider {
                     return getProviders();
                 }
                 return Pordede.getEpisodeLinks(context, url);
+            case PROVIDER_JKANIME:
+                return Jkanime.getEpisodeLinks(url);
         }
         return getProviders();
     }
@@ -96,6 +104,8 @@ public class Provider {
                     return null;
                 }
                 return Pordede.getExternalLink(context, url);
+            case PROVIDER_JKANIME:
+                return Jkanime.getExternalLink(url);
         }
         return null;
     }
