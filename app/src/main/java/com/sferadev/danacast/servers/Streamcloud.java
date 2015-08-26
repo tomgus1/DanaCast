@@ -57,7 +57,7 @@ public class Streamcloud {
             return response[0];
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 }

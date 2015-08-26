@@ -22,7 +22,7 @@ public class ContentUtils {
     public static final int TYPE_LINK = 3;
     public static final int TYPE_MOVIE = 4;
 
-    static String[] dialogOptions = {"Chromecast", "Download", "Open with..."};
+    private static final String[] dialogOptions = {"Chromecast", "Download", "Open with..."};
 
     public static void loadIntentDialog(final Context context, final String url) {
         final String[] finalUrl = new String[1];

@@ -26,7 +26,6 @@ import com.github.snowdream.android.app.UpdateOptions;
 import com.github.snowdream.android.app.UpdatePeriod;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
-import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
 import com.sferadev.danacast.R;
 import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.providers.Provider;
@@ -41,10 +40,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private VideoCastManager mCastManager;
     private SwipeRefreshLayout mRefresh;
-    private MiniController mMini;
     private SearchView searchView;
 
-    private ListView mListView;
     private ArrayList<ArrayList<EntryModel>> mContent = new ArrayList<>();
     private ArrayAdapter mAdapter;
 
@@ -56,9 +53,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         mCastManager = VideoCastManager.getInstance();
 
-        mMini = (MiniController) findViewById(R.id.miniController);
-        mCastManager.addMiniController(mMini);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -67,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mRefresh.setColorSchemeResources(R.color.colorAccent);
         mRefresh.setOnRefreshListener(this);
 
-        mListView = (ListView) findViewById(R.id.listview);
+        ListView mListView = (ListView) findViewById(R.id.listview);
 
         mListView.setOnItemClickListener(this);
 
@@ -104,15 +98,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
-    protected void onDestroy() {
-        if (null != mCastManager) {
-            mMini.removeOnMiniControllerChangedListener(mCastManager);
-            mCastManager.removeMiniController(mMini);
-        }
-        super.onDestroy();
-    }
-
-    @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
         handleIntent(intent);
@@ -144,11 +129,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (searchView != null)
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -201,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void updateListview() {
         List<String> items = new ArrayList<>();
         for (EntryModel object : mContent.get(mContent.size() - 1)) items.add(object.getTitle());

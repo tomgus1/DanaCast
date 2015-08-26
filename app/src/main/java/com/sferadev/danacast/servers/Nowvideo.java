@@ -26,7 +26,7 @@ public class Nowvideo {
             return result[0];
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 }

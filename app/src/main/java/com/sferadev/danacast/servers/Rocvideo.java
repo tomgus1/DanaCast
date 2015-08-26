@@ -27,24 +27,29 @@ public class Rocvideo {
     }
 
     private static String parseLink(final String url, final String fileId) {
-        final String[] response = {null};
+        final String[] result = {null};
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Document doc = Jsoup.connect(url).get();
-                            /*.data("op", "download1")
-                            .data("id", fileId)
-                            .data("method_free", "Continue+video")
+                    Document response = Jsoup.connect(url).get();
+                    String fileName = response.getElementsByAttributeValue("name", "fname").attr("value");
+                    Document doc = Jsoup.connect(url)
+                            .data("F1", "")
+                            .data("op", "download1")
                             .data("usr_login", "")
+                            .data("hash", "")
                             .data("referer", "")
+                            .data("id", fileId)
+                            .data("fname", fileName)
+                            .data("method_free", "Continue+video")
                             .timeout(3000)
-                            .post();*/
+                            .post();
                     Pattern pattern = Pattern.compile("src=\"http:\\/\\/(.*)\\.mp4");
                     Matcher matcher = pattern.matcher(doc.html());
                     if (matcher.find()) {
-                        response[0] = matcher.group(1) + ".mp4";
-                        Log.d("Dana", response[0]);
+                        result[0] = matcher.group(1) + ".mp4";
+                        Log.d("Dana", result[0]);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -54,7 +59,7 @@ public class Rocvideo {
         thread.start();
         try {
             thread.join();
-            return response[0];
+            return result[0];
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;

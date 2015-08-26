@@ -8,8 +8,8 @@ import com.sferadev.danacast.utils.ContentUtils;
 import java.util.ArrayList;
 
 public class Provider {
-    public static final int PROVIDER_SERIESBLANCO = 0;
-    public static final int PROVIDER_PORDEDE = 1;
+    private static final int PROVIDER_SERIESBLANCO = 0;
+    private static final int PROVIDER_PORDEDE = 1;
 
     public static ArrayList<EntryModel> getProviders() {
         ArrayList<EntryModel> items = new ArrayList<>();
