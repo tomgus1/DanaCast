@@ -15,8 +15,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.github.snowdream.android.app.AbstractUpdateListener;
+import com.github.snowdream.android.app.DownloadTask;
 import com.github.snowdream.android.app.UpdateFormat;
+import com.github.snowdream.android.app.UpdateInfo;
 import com.github.snowdream.android.app.UpdateManager;
 import com.github.snowdream.android.app.UpdateOptions;
 import com.github.snowdream.android.app.UpdatePeriod;
@@ -227,6 +231,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 .updatePeriod(new UpdatePeriod(UpdatePeriod.EACH_THREE_DAYS))
                 .checkPackageName(true)
                 .build();
-        manager.check(this, options);
+        manager.check(this, options, new AbstractUpdateListener() {
+            @Override
+            public void onShowUpdateUI(UpdateInfo updateInfo) {
+                Toast.makeText(MainActivity.this, "Downloading DanaCast update", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onShowNoUpdateUI() {
+                //no-op
+            }
+
+            @Override
+            public void onShowUpdateProgressUI(UpdateInfo updateInfo, DownloadTask downloadTask, int i) {
+                //no-op
+            }
+
+            @Override
+            public void ExitApp() {
+                //no-op
+            }
+        });
     }
 }
