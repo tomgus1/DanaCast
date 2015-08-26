@@ -105,8 +105,8 @@
     <orderEntry type="library" exported="" name="design-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="mediarouter-v7-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="ormlite-core-4.47" level="project" />
-    <orderEntry type="library" exported="" name="log-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.8.1" level="project" />
+    <orderEntry type="library" exported="" name="log-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="play-services-cast-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="commons-lang3-3.4" level="project" />
     <orderEntry type="library" exported="" name="jsoup-1.8.3" level="project" />
