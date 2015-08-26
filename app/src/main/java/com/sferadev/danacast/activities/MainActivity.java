@@ -35,12 +35,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
         SwipeRefreshLayout.OnRefreshListener {
 
-    VideoCastManager mCastManager;
+    private VideoCastManager mCastManager;
     private SwipeRefreshLayout mRefresh;
     private MiniController mMini;
+    private SearchView searchView;
 
     private ListView mListView;
-    private ArrayList<EntryModel> mArrayList;
+    private ArrayList<ArrayList<EntryModel>> mContent = new ArrayList<>();
     private ArrayAdapter mAdapter;
 
     @Override
@@ -71,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         handleIntent(getIntent());
 
         List<String> items = new ArrayList<>();
-        for (EntryModel object : mArrayList) items.add(object.getTitle());
+        for (EntryModel object : mContent.get(mContent.size() - 1))
+            items.add(object.getTitle());
         mAdapter = new ArrayAdapter<>(
                 this,
                 R.layout.list_row,
@@ -120,7 +122,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void run() {
                 mRefresh.setRefreshing(false);
-                updateListview(Provider.getProviders());
+                mContent.add(Provider.getProviders());
+                updateListview();
             }
         }, 2500);
     }
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = null;
+        searchView = null;
         if (searchItem != null) searchView = (SearchView) searchItem.getActionView();
         if (searchView != null)
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -146,39 +149,57 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (mArrayList.get(position).getType()) {
+        EntryModel entry = mContent.get(mContent.size() - 1).get(position);
+        switch (entry.getType()) {
             case ContentUtils.TYPE_PROVIDER:
                 PreferenceUtils.setPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER, position);
-                updateListview(Provider.getPopularContent(this, getProvider()));
+                mContent.add(Provider.getPopularContent(this, getProvider()));
+                updateListview();
                 break;
             case ContentUtils.TYPE_SHOW:
-                ArrayList<EntryModel> episodes = Provider.getEpisodeList(this, getProvider(), mArrayList.get(position).getLink());
-                if (!episodes.isEmpty()) updateListview(episodes);
+                ArrayList<EntryModel> episodes = Provider.getEpisodeList(this, getProvider(), entry.getLink());
+                if (!episodes.isEmpty()) {
+                    mContent.add(episodes);
+                    updateListview();
+                }
                 break;
             case ContentUtils.TYPE_EPISODE:
-                ArrayList<EntryModel> episodeLinks = Provider.getEpisodeLinks(this, getProvider(), mArrayList.get(position).getLink());
-                if (!episodeLinks.isEmpty()) updateListview(episodeLinks);
+                ArrayList<EntryModel> episodeLinks = Provider.getEpisodeLinks(this, getProvider(), entry.getLink());
+                if (!episodeLinks.isEmpty()) {
+                    mContent.add(episodeLinks);
+                    updateListview();
+                }
                 break;
             case ContentUtils.TYPE_MOVIE:
-                ArrayList<EntryModel> movieLinks = Provider.getMovieLinks(this, getProvider(), mArrayList.get(position).getLink());
-                if (!movieLinks.isEmpty()) updateListview(movieLinks);
+                ArrayList<EntryModel> movieLinks = Provider.getMovieLinks(this, getProvider(), entry.getLink());
+                if (!movieLinks.isEmpty()) {
+                    mContent.add(movieLinks);
+                    updateListview();
+                }
                 break;
             case ContentUtils.TYPE_LINK:
                 ContentUtils.loadIntentDialog(this, Provider.getExternalLink(this, getProvider(),
-                        mArrayList.get(position).getLink()));
+                        entry.getLink()));
                 break;
         }
     }
 
-    private void updateListview(ArrayList<EntryModel> entries) {
-        mArrayList = entries;
-        List<String> items = new ArrayList<>();
-        for (EntryModel object : mArrayList) items.add(object.getTitle());
-        updateListview(items);
+    @Override
+    public void onBackPressed() {
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+        } else {
+            mContent.trimToSize();
+            if (mContent.size() > 1) {
+                mContent.remove(mContent.size() - 1);
+                updateListview();
+            } else finish();
+        }
     }
 
-    private void updateListview(List<String> items) {
-        mListView.setSelectionAfterHeaderView();
+    private void updateListview() {
+        List<String> items = new ArrayList<>();
+        for (EntryModel object : mContent.get(mContent.size() - 1)) items.add(object.getTitle());
         mAdapter.clear();
         mAdapter.addAll(items);
         mAdapter.notifyDataSetChanged();
@@ -187,10 +208,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            mArrayList = Provider.getSearchResults(this, getProvider(), query);
-            updateListview(mArrayList);
+            mContent.add(Provider.getSearchResults(this, getProvider(), query));
+            updateListview();
         } else {
-            mArrayList = Provider.getProviders();
+            mContent.add(Provider.getProviders());
         }
     }
 
