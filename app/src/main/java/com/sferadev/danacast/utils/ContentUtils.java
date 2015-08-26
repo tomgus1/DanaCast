@@ -73,7 +73,7 @@ public class ContentUtils {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                loadVideoChromecast(context, url);
+                                loadVideoChromecast(context, entry, url);
                                 break;
                             case 1:
                                 loadVideoDownload(context, url);
@@ -91,11 +91,11 @@ public class ContentUtils {
         dialog.show();
     }
 
-    private static void loadVideoChromecast(Context context, String url) {
+    private static void loadVideoChromecast(Context context, EntryModel entry, String url) {
         if (!VideoCastManager.getInstance().isConnected()) return;
         MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
-        mediaMetadata.putString(MediaMetadata.KEY_TITLE, url);
-        //mediaMetadata.addImage(new WebImage(Uri.parse(uriString)));
+        mediaMetadata.putString(MediaMetadata.KEY_TITLE, entry.getTitle());
+        mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
                 .setContentType("video/mp4")
                 .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
