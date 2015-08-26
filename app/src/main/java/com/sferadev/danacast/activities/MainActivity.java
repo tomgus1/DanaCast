@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         UpdateOptions options = new UpdateOptions.Builder(this)
                 .checkUrl("https://raw.githubusercontent.com/SferaDev/DanaCast/master/updates/update.json")
                 .updateFormat(UpdateFormat.JSON)
-                .updatePeriod(new UpdatePeriod(UpdatePeriod.EACH_THREE_DAYS))
+                .updatePeriod(new UpdatePeriod(UpdatePeriod.EACH_TIME))
                 .checkPackageName(true)
                 .build();
         manager.check(this, options, new AbstractUpdateListener() {
