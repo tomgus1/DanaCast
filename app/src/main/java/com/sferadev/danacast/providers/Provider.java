@@ -30,6 +30,8 @@ public class Provider {
                     return getProviders();
                 }
                 return Pordede.getSearchResults(context, query);
+            case PROVIDER_JKANIME:
+                return Jkanime.getSearchResults(query);
         }
         return getProviders();
     }

@@ -18,16 +18,13 @@ public class Jkanime {
             @Override
             public void run() {
                 try {
-                    Document document = Jsoup.connect("http://seriesblanco.com/search.php" +
-                            "?q1=" + query.replace(" ", "+")).get();
-                    Elements elements = document.getElementsByClass("post-header").first()
-                            .getElementsByTag("a");
+                    Document document = Jsoup.connect("http://jkanime.net/buscar/" +
+                            query.replace(" ", "_")).get();
+                    Elements elements = document.getElementsByClass("titl");
                     for (Element element : elements) {
-                        if (element.hasText()) {
-                            String title = element.text();
-                            String url = element.attr("abs:href");
-                            result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, null));
-                        }
+                        String title = element.text();
+                        String url = element.attr("abs:href");
+                        result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, null));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
