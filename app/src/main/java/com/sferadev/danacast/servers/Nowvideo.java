@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 
 public class Nowvideo {
     public static String getVideoPath(final String url) {
-        final String[] response = {null};
+        final String[] result = {null};
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -14,7 +14,7 @@ public class Nowvideo {
                     Document doc = Jsoup.connect("http://www.nowvideo.sx/mobile/video.php?id=" + id)
                             .timeout(3000)
                             .get();
-                    response[0] = doc.select("source[type=video/mp4]").attr("src");
+                    result[0] = doc.select("source[type=video/mp4]").attr("src");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -23,7 +23,7 @@ public class Nowvideo {
         thread.start();
         try {
             thread.join();
-            return response[0];
+            return result[0];
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
