@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
+import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.servers.Server;
 
 public class ContentUtils {
@@ -22,9 +23,9 @@ public class ContentUtils {
     public static final int TYPE_LINK = 3;
     public static final int TYPE_MOVIE = 4;
 
-    private static final String[] dialogOptions = {"Chromecast", "Download", "Open with..."};
+    private static final String[] dialogOptions = {"Chromecast", "Download", "Open in Browser", "Open with..."};
 
-    public static void loadIntentDialog(final Context context, final String url) {
+    public static void loadIntentDialog(final Context context, final EntryModel entry, final String url) {
         final String[] finalUrl = new String[1];
         final ProgressDialog dialog = new ProgressDialog(context);
         if (!Server.isSupported(url)) {
@@ -55,7 +56,7 @@ public class ContentUtils {
                         Toast.makeText(context, "The requested link doesn't work", Toast.LENGTH_LONG).show();
                         return;
                     }
-                    loadOptionsDialog(context, finalUrl[0]);
+                    loadOptionsDialog(context, entry, finalUrl[0]);
                 }
             }
 
@@ -63,7 +64,7 @@ public class ContentUtils {
         task.execute();
     }
 
-    private static void loadOptionsDialog(final Context context, final String url) {
+    private static void loadOptionsDialog(final Context context, final EntryModel entry, final String url) {
         AlertDialog dialog = new AlertDialog.Builder(context,
                 android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth)
                 .setTitle(url)
@@ -78,6 +79,9 @@ public class ContentUtils {
                                 loadVideoDownload(context, url);
                                 break;
                             case 2:
+                                NetworkUtils.openChromeTab(context, url);
+                                break;
+                            case 3:
                                 loadVideoExternal(context, url);
                                 break;
                         }

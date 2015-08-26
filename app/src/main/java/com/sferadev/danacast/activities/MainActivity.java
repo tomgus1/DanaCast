@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
                 break;
             case ContentUtils.TYPE_LINK:
-                ContentUtils.loadIntentDialog(this, Provider.getExternalLink(this, getProvider(),
+                ContentUtils.loadIntentDialog(this, entry, Provider.getExternalLink(this, getProvider(),
                         entry.getLink()));
                 break;
         }
