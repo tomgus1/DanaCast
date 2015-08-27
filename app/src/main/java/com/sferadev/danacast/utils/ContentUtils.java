@@ -130,7 +130,7 @@ public class ContentUtils {
 
     private static void loadVideoExternal(Context context, String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(url), "video/*");
+        intent.setDataAndType(Uri.parse(url), "video/mp4");
         context.startActivity(intent);
     }
 
@@ -157,7 +157,7 @@ public class ContentUtils {
 
     private static void loadAudioExternal(Context context, String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(url), "audio/*");
+        intent.setDataAndType(Uri.parse(url), "audio/mp3");
         context.startActivity(intent);
     }
 }
