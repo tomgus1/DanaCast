@@ -344,8 +344,12 @@ public class VideoCastControllerFragment extends Fragment implements
             case MediaStatus.PLAYER_STATE_IDLE:
                 switch (mCastManager.getIdleReason()) {
                     case MediaStatus.IDLE_REASON_FINISHED:
-                        if (!mIsFresh && mMediaStatus.getLoadingItemId() == MediaQueueItem.INVALID_ITEM_ID) {
-                            mCastController.closeActivity();
+                        try {
+                            if (!mIsFresh && mMediaStatus.getLoadingItemId() == MediaQueueItem.INVALID_ITEM_ID) {
+                                mCastController.closeActivity();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                         break;
                     case MediaStatus.IDLE_REASON_CANCELED:
