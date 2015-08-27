@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ArrayList<ArrayList<EntryModel>> mContent = new ArrayList<>();
     private ArrayAdapter mAdapter;
 
+    private String LAST_CONTENT;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case ContentUtils.TYPE_SHOW:
                 ArrayList<EntryModel> episodes = Provider.getEpisodeList(this, getProvider(), entry.getLink());
                 if (!episodes.isEmpty()) {
+                    LAST_CONTENT = entry.getTitle();
                     mContent.add(episodes);
                     updateListview();
                 }
@@ -150,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case ContentUtils.TYPE_EPISODE:
                 ArrayList<EntryModel> episodeLinks = Provider.getEpisodeLinks(this, getProvider(), entry.getLink());
                 if (!episodeLinks.isEmpty()) {
+                    LAST_CONTENT = LAST_CONTENT + " " + entry.getTitle();
                     mContent.add(episodeLinks);
                     updateListview();
                 }
@@ -157,13 +161,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case ContentUtils.TYPE_MOVIE:
                 ArrayList<EntryModel> movieLinks = Provider.getMovieLinks(this, getProvider(), entry.getLink());
                 if (!movieLinks.isEmpty()) {
+                    LAST_CONTENT = entry.getTitle();
                     mContent.add(movieLinks);
                     updateListview();
                 }
                 break;
             case ContentUtils.TYPE_SONG:
+                LAST_CONTENT = entry.getTitle();
             case ContentUtils.TYPE_LINK:
-                ContentUtils.loadIntentDialog(this, entry, Provider.getExternalLink(this, getProvider(),
+                ContentUtils.loadIntentDialog(this, LAST_CONTENT, entry, Provider.getExternalLink(this, getProvider(),
                         entry.getLink()));
                 break;
         }

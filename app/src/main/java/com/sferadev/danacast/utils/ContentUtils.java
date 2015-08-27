@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.servers.Server;
+
+import java.io.File;
 
 public class ContentUtils {
     public static final int TYPE_PROVIDER = 0;
@@ -26,7 +29,7 @@ public class ContentUtils {
 
     private static final String[] dialogOptions = {"Chromecast", "Download", "Open in Browser", "Open with..."};
 
-    public static void loadIntentDialog(final Context context, final EntryModel entry, final String url) {
+    public static void loadIntentDialog(final Context context, final String lastContent, final EntryModel entry, final String url) {
         final String[] finalUrl = new String[1];
         final ProgressDialog dialog = new ProgressDialog(context);
         if (!Server.isSupported(url)) {
@@ -57,7 +60,7 @@ public class ContentUtils {
                         Toast.makeText(context, "The requested link doesn't work", Toast.LENGTH_LONG).show();
                         return;
                     }
-                    loadOptionsDialog(context, entry, finalUrl[0]);
+                    loadOptionsDialog(context, lastContent, entry, finalUrl[0]);
                 }
             }
 
@@ -65,7 +68,7 @@ public class ContentUtils {
         task.execute();
     }
 
-    private static void loadOptionsDialog(final Context context, final EntryModel entry, final String url) {
+    private static void loadOptionsDialog(final Context context, final String lastContent, final EntryModel entry, final String url) {
         AlertDialog dialog = new AlertDialog.Builder(context,
                 android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth)
                 .setTitle(url)
@@ -81,7 +84,11 @@ public class ContentUtils {
                                 }
                                 break;
                             case 1:
-                                loadFileDownload(context, url);
+                                if (entry.getType() == TYPE_SONG) {
+                                    loadAudioDownload(context, lastContent, url);
+                                } else {
+                                    loadVideoDownload(context, lastContent, url);
+                                }
                                 break;
                             case 2:
                                 NetworkUtils.openChromeTab(context, url);
@@ -113,9 +120,11 @@ public class ContentUtils {
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
-    private static void loadFileDownload(Context context, String url) {
+    private static void loadVideoDownload(Context context, String lastContent, String url) {
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+                File.separator + "DanaCast" + File.separator + lastContent + ".mp4");
         downloadManager.enqueue(request);
     }
 
@@ -136,6 +145,14 @@ public class ContentUtils {
                 .setMetadata(mediaMetadata)
                 .build();
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
+    }
+
+    private static void loadAudioDownload(Context context, String lastContent, String url) {
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+                File.separator + "DanaCast" + File.separator + lastContent + ".mp3");
+        downloadManager.enqueue(request);
     }
 
     private static void loadAudioExternal(Context context, String url) {
