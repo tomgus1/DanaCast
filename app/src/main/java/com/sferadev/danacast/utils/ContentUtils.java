@@ -78,9 +78,9 @@ public class ContentUtils {
                         switch (which) {
                             case 0:
                                 if (entry.getType() == TYPE_SONG) {
-                                    loadAudioChromecast(context, entry, url);
+                                    loadAudioChromecast(context, lastContent, url);
                                 } else {
-                                    loadVideoChromecast(context, entry, url);
+                                    loadVideoChromecast(context, lastContent, url);
                                 }
                                 break;
                             case 1:
@@ -107,10 +107,10 @@ public class ContentUtils {
         dialog.show();
     }
 
-    private static void loadVideoChromecast(Context context, EntryModel entry, String url) {
+    private static void loadVideoChromecast(Context context, String lastContent, String url) {
         if (!VideoCastManager.getInstance().isConnected()) return;
         MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
-        mediaMetadata.putString(MediaMetadata.KEY_TITLE, entry.getTitle());
+        mediaMetadata.putString(MediaMetadata.KEY_TITLE, lastContent);
         mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
                 .setContentType("video/mp4")
@@ -134,10 +134,10 @@ public class ContentUtils {
         context.startActivity(intent);
     }
 
-    public static void loadAudioChromecast(Context context, EntryModel entry, String url) {
+    public static void loadAudioChromecast(Context context, String lastContent, String url) {
         if (!VideoCastManager.getInstance().isConnected()) return;
         MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_MUSIC_TRACK);
-        mediaMetadata.putString(MediaMetadata.KEY_TITLE, entry.getTitle());
+        mediaMetadata.putString(MediaMetadata.KEY_TITLE, lastContent);
         mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
                 .setContentType("audio/mp3")
