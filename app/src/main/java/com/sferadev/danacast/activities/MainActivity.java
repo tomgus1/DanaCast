@@ -26,6 +26,7 @@ import com.github.snowdream.android.app.UpdateOptions;
 import com.github.snowdream.android.app.UpdatePeriod;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
+import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
 import com.sferadev.danacast.R;
 import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.providers.Provider;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         SwipeRefreshLayout.OnRefreshListener {
 
     private VideoCastManager mCastManager;
+    private MiniController mMini;
     private SwipeRefreshLayout mRefresh;
     private SearchView searchView;
 
@@ -54,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
         mCastManager = VideoCastManager.getInstance();
+        mCastManager.reconnectSessionIfPossible();
+        mMini = (MiniController) findViewById(R.id.miniController);
+        mCastManager.addMiniController(mMini);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ListView mListView = (ListView) findViewById(R.id.listview);
 
         mListView.setOnItemClickListener(this);
-
-        mCastManager.reconnectSessionIfPossible();
 
         handleIntent(getIntent());
 
@@ -97,6 +100,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onPause() {
         mCastManager.decrementUiCounter();
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (null != mCastManager) {
+            mMini.removeOnMiniControllerChangedListener(mCastManager);
+            mCastManager.removeMiniController(mMini);
+        }
+        super.onDestroy();
     }
 
     @Override
