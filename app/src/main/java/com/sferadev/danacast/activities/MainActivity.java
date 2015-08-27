@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mCastManager.reconnectSessionIfPossible();
         mMini = (MiniController) findViewById(R.id.miniController);
         mCastManager.addMiniController(mMini);
+        mCastManager.setCastControllerImmersive(false);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
