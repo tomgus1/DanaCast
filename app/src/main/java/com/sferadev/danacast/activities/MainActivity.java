@@ -15,15 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.github.snowdream.android.app.AbstractUpdateListener;
-import com.github.snowdream.android.app.DownloadTask;
-import com.github.snowdream.android.app.UpdateFormat;
-import com.github.snowdream.android.app.UpdateInfo;
-import com.github.snowdream.android.app.UpdateManager;
-import com.github.snowdream.android.app.UpdateOptions;
-import com.github.snowdream.android.app.UpdatePeriod;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
@@ -32,6 +24,7 @@ import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.providers.Provider;
 import com.sferadev.danacast.utils.ContentUtils;
 import com.sferadev.danacast.utils.PreferenceUtils;
+import com.sferadev.danacast.utils.UpdateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 items);
         mListView.setAdapter(mAdapter);
 
-        checkUpdates();
+        UpdateUtils.checkUpdates(this);
     }
 
     @Override
@@ -224,34 +217,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return PreferenceUtils.getPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER, 0);
     }
 
-    private void checkUpdates() {
-        UpdateManager manager = new UpdateManager(this);
-        UpdateOptions options = new UpdateOptions.Builder(this)
-                .checkUrl("https://raw.githubusercontent.com/SferaDev/DanaCast/master/updates/update.json")
-                .updateFormat(UpdateFormat.JSON)
-                .updatePeriod(new UpdatePeriod(UpdatePeriod.EACH_TIME))
-                .checkPackageName(true)
-                .build();
-        manager.check(this, options, new AbstractUpdateListener() {
-            @Override
-            public void onShowUpdateUI(UpdateInfo updateInfo) {
-                Toast.makeText(MainActivity.this, "Downloading DanaCast update", Toast.LENGTH_LONG).show();
-            }
 
-            @Override
-            public void onShowNoUpdateUI() {
-                //no-op
-            }
-
-            @Override
-            public void onShowUpdateProgressUI(UpdateInfo updateInfo, DownloadTask downloadTask, int i) {
-                //no-op
-            }
-
-            @Override
-            public void ExitApp() {
-                //no-op
-            }
-        });
-    }
 }
