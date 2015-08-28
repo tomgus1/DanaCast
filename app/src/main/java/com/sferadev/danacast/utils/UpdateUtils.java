@@ -18,7 +18,7 @@ public class UpdateUtils {
     private static final String URL = "https://raw.githubusercontent.com/SferaDev/DanaCast/master/updates/update.json";
 
     public static void checkUpdates(final Context context) {
-        if (!getRemoteVersionCode().equals(getLocalVersionCode(context))) {
+        if (getRemoteVersionCode() != getLocalVersionCode(context)) {
             final DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getRemoteApkURL()));
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
@@ -36,22 +36,22 @@ public class UpdateUtils {
         }
     }
 
-    private static String getRemoteVersionCode() {
+    private static int getRemoteVersionCode() {
         try {
-            return new JSONObject(NetworkUtils.getURLOutput(URL)).getJSONObject("updateInfo").getString("versionCode");
+            return Integer.parseInt(new JSONObject(NetworkUtils.getURLOutput(URL)).getJSONObject("updateInfo").getString("versionCode"));
         } catch (JSONException e) {
             e.printStackTrace();
-            return null;
+            return -1;
         }
     }
 
-    private static String getLocalVersionCode(Context context) {
+    private static int getLocalVersionCode(Context context) {
         try {
             return context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0).versionName;
+                    .getPackageInfo(context.getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            return null;
+            return -1;
         }
     }
 
@@ -65,8 +65,12 @@ public class UpdateUtils {
     }
 
     private static void installApk(Context context, Uri uri) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, "application/vnd.android.package-archive");
-        context.startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
