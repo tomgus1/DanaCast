@@ -22,7 +22,7 @@ public class UpdateUtils {
             final DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getRemoteApkURL()));
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
-                    File.separator + "DanaCast" + File.separator + getRemoteVersionCode() + ".apk");
+                    File.separator + "DanaCast" + File.separator + "Updates" + File.separator + getRemoteVersionCode() + ".apk");
             request.setVisibleInDownloadsUi(false);
             final long id = downloadManager.enqueue(request);
             context.registerReceiver(new BroadcastReceiver() {
