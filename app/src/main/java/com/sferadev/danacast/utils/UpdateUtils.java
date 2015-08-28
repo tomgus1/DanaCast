@@ -38,7 +38,8 @@ public class UpdateUtils {
 
     private static int getRemoteVersionCode() {
         try {
-            return Integer.parseInt(new JSONObject(NetworkUtils.getURLOutput(URL)).getJSONObject("updateInfo").getString("versionCode"));
+            JSONObject jsonObject = new JSONObject(NetworkUtils.getURLOutput(URL)).getJSONObject("updateInfo");
+            return Integer.parseInt(jsonObject.getString("versionCode"));
         } catch (JSONException e) {
             e.printStackTrace();
             return -1;
