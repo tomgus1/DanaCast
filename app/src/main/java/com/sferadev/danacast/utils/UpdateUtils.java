@@ -1,57 +1,39 @@
 package com.sferadev.danacast.utils;
 
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.widget.Toast;
-
-import com.github.snowdream.android.app.AbstractUpdateListener;
-import com.github.snowdream.android.app.DownloadTask;
-import com.github.snowdream.android.app.UpdateFormat;
-import com.github.snowdream.android.app.UpdateInfo;
-import com.github.snowdream.android.app.UpdateManager;
-import com.github.snowdream.android.app.UpdateOptions;
-import com.github.snowdream.android.app.UpdatePeriod;
+import android.net.Uri;
+import android.os.Environment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 
 public class UpdateUtils {
     private static final String URL = "https://raw.githubusercontent.com/SferaDev/DanaCast/master/updates/update.json";
 
     public static void checkUpdates(final Context context) {
-        UpdateManager manager = new UpdateManager(context);
         if (!getRemoteVersionCode().equals(getLocalVersionCode(context))) {
-            manager.check(context, updateOptions(context), new AbstractUpdateListener() {
+            final DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getRemoteApkURL()));
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+                    File.separator + "DanaCast" + File.separator + getRemoteVersionCode() + ".apk");
+            request.setVisibleInDownloadsUi(false);
+            final long id = downloadManager.enqueue(request);
+            context.registerReceiver(new BroadcastReceiver() {
                 @Override
-                public void onShowUpdateUI(UpdateInfo updateInfo) {
-                    Toast.makeText(context, "Downloading DanaCast update", Toast.LENGTH_LONG).show();
+                public void onReceive(Context context, Intent intent) {
+                    installApk(context, downloadManager.getUriForDownloadedFile(id));
                 }
+            }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        } else {
 
-                @Override
-                public void onShowNoUpdateUI() {
-                    //no-op
-                }
-
-                @Override
-                public void onShowUpdateProgressUI(UpdateInfo updateInfo, DownloadTask downloadTask, int i) {
-                    //no-op
-                }
-
-                @Override
-                public void ExitApp() {
-                    //no-op
-                }
-            });
         }
-    }
-
-    private static UpdateOptions updateOptions(Context context) {
-        return new UpdateOptions.Builder(context)
-                .checkUrl(URL)
-                .updateFormat(UpdateFormat.JSON)
-                .updatePeriod(new UpdatePeriod(UpdatePeriod.EACH_TIME))
-                .checkPackageName(true)
-                .build();
     }
 
     private static String getRemoteVersionCode() {
@@ -71,5 +53,20 @@ public class UpdateUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private static String getRemoteApkURL() {
+        try {
+            return new JSONObject(NetworkUtils.getURLOutput(URL)).getJSONObject("updateInfo").getString("apkUrl");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static void installApk(Context context, Uri uri) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        context.startActivity(intent);
     }
 }
