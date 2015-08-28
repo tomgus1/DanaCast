@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Provider {
     private static final int PROVIDER_SERIESBLANCO = 0;
     private static final int PROVIDER_SERIESYONKIS = 1;
-    private static final int PROVIDER_PELISYONKIS = 2;
+    private static final int PROVIDER_WATCHSERIES = 2;
     private static final int PROVIDER_PORDEDE = 3;
     private static final int PROVIDER_JKANIME = 4;
     private static final int PROVIDER_MUSIC163 = 5;
@@ -19,7 +19,7 @@ public class Provider {
         ArrayList<EntryModel> items = new ArrayList<>();
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesBlanco", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesYonkis", null, null));
-        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "PeliculasYonkis", null, null));
+        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Watchseries", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Pordede", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "JKAnime", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Music163", null, null));
@@ -32,8 +32,8 @@ public class Provider {
                 return Seriesblanco.getSearchResults(query);
             case PROVIDER_SERIESYONKIS:
                 return Seriesyonkis.getSearchResults(query);
-            case PROVIDER_PELISYONKIS:
-                return null; //TODO
+            case PROVIDER_WATCHSERIES:
+                return Watchseries.getSearchResults(query);
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -54,8 +54,8 @@ public class Provider {
                 return Seriesblanco.getPopularContent();
             case PROVIDER_SERIESYONKIS:
                 return Seriesyonkis.getPopularContent();
-            case PROVIDER_PELISYONKIS:
-                return null; //TODO
+            case PROVIDER_WATCHSERIES:
+                return Watchseries.getPopularContent();
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -76,6 +76,8 @@ public class Provider {
                 return Seriesblanco.getEpisodeList(url);
             case PROVIDER_SERIESYONKIS:
                 return Seriesyonkis.getEpisodeList(url);
+            case PROVIDER_WATCHSERIES:
+                return Watchseries.getEpisodeList(url);
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -94,6 +96,8 @@ public class Provider {
                 return Seriesblanco.getEpisodeLinks(url);
             case PROVIDER_SERIESYONKIS:
                 return Seriesyonkis.getEpisodeLinks(url);
+            case PROVIDER_WATCHSERIES:
+                return Watchseries.getEpisodeLinks(url);
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -108,8 +112,6 @@ public class Provider {
 
     public static ArrayList<EntryModel> getMovieLinks(Context context, int provider, String url) {
         switch (provider) {
-            case PROVIDER_PELISYONKIS:
-                return null; //TODO
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -126,8 +128,8 @@ public class Provider {
                 return Seriesblanco.getExternalLink(url);
             case PROVIDER_SERIESYONKIS:
                 return Seriesyonkis.getExternalLink(url);
-            case PROVIDER_PELISYONKIS:
-                return null; //TODO
+            case PROVIDER_WATCHSERIES:
+                return Watchseries.getExternalLink(url);
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
