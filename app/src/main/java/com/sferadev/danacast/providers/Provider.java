@@ -9,13 +9,17 @@ import java.util.ArrayList;
 
 public class Provider {
     private static final int PROVIDER_SERIESBLANCO = 0;
-    private static final int PROVIDER_PORDEDE = 1;
-    private static final int PROVIDER_JKANIME = 2;
-    private static final int PROVIDER_MUSIC163 = 3;
+    private static final int PROVIDER_SERIESYONKIS = 1;
+    private static final int PROVIDER_PELISYONKIS = 2;
+    private static final int PROVIDER_PORDEDE = 3;
+    private static final int PROVIDER_JKANIME = 4;
+    private static final int PROVIDER_MUSIC163 = 5;
 
     public static ArrayList<EntryModel> getProviders() {
         ArrayList<EntryModel> items = new ArrayList<>();
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesBlanco", null, null));
+        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesYonkis", null, null));
+        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "PeliculasYonkis", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Pordede", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "JKAnime", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Music163", null, null));
@@ -26,6 +30,10 @@ public class Provider {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getSearchResults(query);
+            case PROVIDER_SERIESYONKIS:
+                return Seriesyonkis.getSearchResults(query);
+            case PROVIDER_PELISYONKIS:
+                return null; //TODO
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -44,6 +52,10 @@ public class Provider {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getPopularContent();
+            case PROVIDER_SERIESYONKIS:
+                return Seriesyonkis.getPopularContent();
+            case PROVIDER_PELISYONKIS:
+                return null; //TODO
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -62,6 +74,8 @@ public class Provider {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getEpisodeList(url);
+            case PROVIDER_SERIESYONKIS:
+                return Seriesyonkis.getEpisodeList(url);
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -78,6 +92,8 @@ public class Provider {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getEpisodeLinks(url);
+            case PROVIDER_SERIESYONKIS:
+                return Seriesyonkis.getEpisodeLinks(url);
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -92,6 +108,8 @@ public class Provider {
 
     public static ArrayList<EntryModel> getMovieLinks(Context context, int provider, String url) {
         switch (provider) {
+            case PROVIDER_PELISYONKIS:
+                return null; //TODO
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
@@ -106,6 +124,10 @@ public class Provider {
         switch (provider) {
             case PROVIDER_SERIESBLANCO:
                 return Seriesblanco.getExternalLink(url);
+            case PROVIDER_SERIESYONKIS:
+                return Seriesyonkis.getExternalLink(url);
+            case PROVIDER_PELISYONKIS:
+                return null; //TODO
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
