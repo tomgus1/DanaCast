@@ -12,8 +12,9 @@ public class Provider {
     private static final int PROVIDER_SERIESYONKIS = 1;
     private static final int PROVIDER_WATCHSERIES = 2;
     private static final int PROVIDER_PORDEDE = 3;
-    private static final int PROVIDER_JKANIME = 4;
-    private static final int PROVIDER_MUSIC163 = 5;
+    private static final int PROVIDER_GNULA = 4;
+    private static final int PROVIDER_JKANIME = 5;
+    private static final int PROVIDER_MUSIC163 = 6;
 
     public static ArrayList<EntryModel> getProviders() {
         ArrayList<EntryModel> items = new ArrayList<>();
@@ -21,6 +22,7 @@ public class Provider {
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesYonkis", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Watchseries", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Pordede", null, null));
+        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Gnula", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "JKAnime", null, null));
         items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Music163", null, null));
         return items;
@@ -40,6 +42,8 @@ public class Provider {
                     return getProviders();
                 }
                 return Pordede.getSearchResults(context, query);
+            case PROVIDER_GNULA:
+                return Gnula.getSearchResults(query);
             case PROVIDER_JKANIME:
                 return Jkanime.getSearchResults(query);
             case PROVIDER_MUSIC163:
@@ -62,6 +66,8 @@ public class Provider {
                     return getProviders();
                 }
                 return Pordede.getPopularContent(context);
+            case PROVIDER_GNULA:
+                return Gnula.getPopularContent();
             case PROVIDER_JKANIME:
                 return Jkanime.getPopularContent();
             case PROVIDER_MUSIC163:
@@ -118,6 +124,8 @@ public class Provider {
                     return getProviders();
                 }
                 return Pordede.getMovieLinks(context, url);
+            case PROVIDER_GNULA:
+                return Gnula.getMovieLinks(url);
         }
         return getProviders();
     }
@@ -136,6 +144,8 @@ public class Provider {
                     return null;
                 }
                 return Pordede.getExternalLink(context, url);
+            case PROVIDER_GNULA:
+                return Gnula.getExternalLink(url);
             case PROVIDER_JKANIME:
                 return Jkanime.getExternalLink(url);
             case PROVIDER_MUSIC163:
