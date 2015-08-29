@@ -35,7 +35,7 @@ public class Jkanime {
         try {
             thread.join();
             return result;
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }
@@ -64,7 +64,7 @@ public class Jkanime {
         try {
             thread.join();
             return result;
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }
@@ -91,7 +91,7 @@ public class Jkanime {
         try {
             thread.join();
             return result;
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }
@@ -120,7 +120,7 @@ public class Jkanime {
         try {
             thread.join();
             return result;
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }

@@ -64,7 +64,7 @@ public class Music163 {
         try {
             thread.join();
             return result;
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             e.printStackTrace();
         }
         return null;
@@ -93,7 +93,7 @@ public class Music163 {
         try {
             thread.join();
             return result;
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             e.printStackTrace();
         }
         return null;
@@ -141,7 +141,7 @@ public class Music163 {
         try {
             thread.join();
             return result[0];
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | NullPointerException e) {
             e.printStackTrace();
         }
         return null;

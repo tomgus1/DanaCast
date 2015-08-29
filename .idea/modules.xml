@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CastCompanion/CastCompanion.iml" filepath="$PROJECT_DIR$/CastCompanion/CastCompanion.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CastCompanion/CastCompanion.iml" filepath="$PROJECT_DIR$/CastCompanion/CastCompanion.iml" />
       <module fileurl="file://$PROJECT_DIR$/DanaCast.iml" filepath="$PROJECT_DIR$/DanaCast.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
