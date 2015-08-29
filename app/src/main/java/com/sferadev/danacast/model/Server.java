@@ -1,4 +1,7 @@
-package com.sferadev.danacast.servers;
+package com.sferadev.danacast.model;
+
+import com.sferadev.danacast.servers.Nowvideo;
+import com.sferadev.danacast.servers.Streamcloud;
 
 public class Server {
     public static boolean isSupported(String url) {

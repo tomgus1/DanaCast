@@ -1,32 +1,35 @@
-package com.sferadev.danacast.providers;
+package com.sferadev.danacast.model;
 
 import android.content.Context;
 
-import com.sferadev.danacast.model.EntryModel;
-import com.sferadev.danacast.utils.ContentUtils;
+import com.sferadev.danacast.providers.Gnula;
+import com.sferadev.danacast.providers.Jkanime;
+import com.sferadev.danacast.providers.Music163;
+import com.sferadev.danacast.providers.Pordede;
+import com.sferadev.danacast.providers.Seriesblanco;
+import com.sferadev.danacast.providers.Seriesyonkis;
+import com.sferadev.danacast.providers.Watchseries;
 
 import java.util.ArrayList;
 
 public class Provider {
-    private static final int PROVIDER_SERIESBLANCO = 0;
-    private static final int PROVIDER_SERIESYONKIS = 1;
-    private static final int PROVIDER_WATCHSERIES = 2;
-    private static final int PROVIDER_PORDEDE = 3;
-    private static final int PROVIDER_GNULA = 4;
-    private static final int PROVIDER_JKANIME = 5;
-    private static final int PROVIDER_MUSIC163 = 6;
+    public static final int PROVIDER_SERIESBLANCO = 0;
+    public static final int PROVIDER_SERIESYONKIS = 1;
+    public static final int PROVIDER_WATCHSERIES = 2;
+    public static final int PROVIDER_PORDEDE = 3;
+    public static final int PROVIDER_GNULA = 4;
+    public static final int PROVIDER_JKANIME = 5;
+    public static final int PROVIDER_MUSIC163 = 6;
 
-    public static ArrayList<EntryModel> getProviders() {
-        ArrayList<EntryModel> items = new ArrayList<>();
-        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesBlanco", null, null));
-        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "SeriesYonkis", null, null));
-        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Watchseries", null, null));
-        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Pordede", null, null));
-        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Gnula", null, null));
-        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "JKAnime", null, null));
-        items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, "Music163", null, null));
-        return items;
-    }
+    public static String[] providerNames = new String[]{
+            "SeriesBlanco",
+            "SeriesYonkis",
+            "Watchseries",
+            "Pordede",
+            "Gnula",
+            "JKAnime",
+            "Music163"
+    };
 
     public static ArrayList<EntryModel> getSearchResults(Context context, int provider, String query) {
         switch (provider) {
@@ -39,7 +42,7 @@ public class Provider {
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
-                    return getProviders();
+                    return Category.getCategories();
                 }
                 return Pordede.getSearchResults(context, query);
             case PROVIDER_GNULA:
@@ -49,7 +52,7 @@ public class Provider {
             case PROVIDER_MUSIC163:
                 return Music163.getSearchResults(query);
         }
-        return getProviders();
+        return Category.getCategories();
     }
 
     public static ArrayList<EntryModel> getPopularContent(Context context, int provider) {
@@ -63,7 +66,7 @@ public class Provider {
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
-                    return getProviders();
+                    return Category.getCategories();
                 }
                 return Pordede.getPopularContent(context);
             case PROVIDER_GNULA:
@@ -73,7 +76,7 @@ public class Provider {
             case PROVIDER_MUSIC163:
                 return Music163.getPopularContent();
         }
-        return getProviders();
+        return Category.getCategories();
     }
 
     public static ArrayList<EntryModel> getEpisodeList(Context context, int provider, String url) {
@@ -87,13 +90,13 @@ public class Provider {
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
-                    return getProviders();
+                    return Category.getCategories();
                 }
                 return Pordede.getEpisodeList(context, url);
             case PROVIDER_JKANIME:
                 return Jkanime.getEpisodeList(url);
         }
-        return getProviders();
+        return Category.getCategories();
     }
 
     public static ArrayList<EntryModel> getEpisodeLinks(Context context, int provider, String url) {
@@ -107,13 +110,13 @@ public class Provider {
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
-                    return getProviders();
+                    return Category.getCategories();
                 }
                 return Pordede.getEpisodeLinks(context, url);
             case PROVIDER_JKANIME:
                 return Jkanime.getEpisodeLinks(url);
         }
-        return getProviders();
+        return Category.getCategories();
     }
 
     public static ArrayList<EntryModel> getMovieLinks(Context context, int provider, String url) {
@@ -121,13 +124,13 @@ public class Provider {
             case PROVIDER_PORDEDE:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
-                    return getProviders();
+                    return Category.getCategories();
                 }
                 return Pordede.getMovieLinks(context, url);
             case PROVIDER_GNULA:
                 return Gnula.getMovieLinks(url);
         }
-        return getProviders();
+        return Category.getCategories();
     }
 
     public static String getExternalLink(Context context, int provider, String url) {

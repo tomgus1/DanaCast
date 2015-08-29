@@ -15,17 +15,18 @@ import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.sferadev.danacast.model.EntryModel;
-import com.sferadev.danacast.servers.Server;
+import com.sferadev.danacast.model.Server;
 
 import java.io.File;
 
 public class ContentUtils {
-    public static final int TYPE_PROVIDER = 0;
-    public static final int TYPE_SHOW = 1;
-    public static final int TYPE_EPISODE = 2;
-    public static final int TYPE_LINK = 3;
-    public static final int TYPE_MOVIE = 4;
-    public static final int TYPE_SONG = 5;
+    public static final int TYPE_CATEGORY = 0;
+    public static final int TYPE_PROVIDER = 1;
+    public static final int TYPE_SHOW = 2;
+    public static final int TYPE_EPISODE = 3;
+    public static final int TYPE_LINK = 4;
+    public static final int TYPE_MOVIE = 5;
+    public static final int TYPE_SONG = 6;
 
     private static final String[] dialogOptions = {"Chromecast", "Download", "Open in Browser", "Open with..."};
 

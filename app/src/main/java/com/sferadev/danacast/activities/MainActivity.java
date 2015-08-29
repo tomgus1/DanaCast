@@ -20,8 +20,9 @@ import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
 import com.sferadev.danacast.R;
+import com.sferadev.danacast.model.Category;
 import com.sferadev.danacast.model.EntryModel;
-import com.sferadev.danacast.providers.Provider;
+import com.sferadev.danacast.model.Provider;
 import com.sferadev.danacast.utils.ContentUtils;
 import com.sferadev.danacast.utils.PreferenceUtils;
 import com.sferadev.danacast.utils.UpdateUtils;
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void run() {
                 mRefresh.setRefreshing(false);
-                mContent.add(Provider.getProviders());
+                mContent.add(Category.getCategories());
                 updateListview();
             }
         }, 2500);
@@ -143,8 +144,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         EntryModel entry = mContent.get(mContent.size() - 1).get(position);
         switch (entry.getType()) {
+            case ContentUtils.TYPE_CATEGORY:
+                mContent.add(Category.getProviders(position));
+                updateListview();
+                break;
             case ContentUtils.TYPE_PROVIDER:
-                PreferenceUtils.setPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER, position);
+                PreferenceUtils.setPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER,
+                        mContent.get(mContent.size() - 1).get(position).getId());
                 mContent.add(Provider.getPopularContent(this, getProvider()));
                 updateListview();
                 break;
@@ -209,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             mContent.add(Provider.getSearchResults(this, getProvider(), query));
             updateListview();
         } else {
-            mContent.add(Provider.getProviders());
+            mContent.add(Category.getCategories());
         }
     }
 
