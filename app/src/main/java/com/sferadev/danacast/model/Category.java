@@ -11,6 +11,7 @@ import static com.sferadev.danacast.model.Provider.PROVIDER_PORDEDE;
 import static com.sferadev.danacast.model.Provider.PROVIDER_SERIESBLANCO;
 import static com.sferadev.danacast.model.Provider.PROVIDER_SERIESYONKIS;
 import static com.sferadev.danacast.model.Provider.PROVIDER_WATCHSERIES;
+import static com.sferadev.danacast.model.Provider.PROVIDER_ZPELICULAS;
 import static com.sferadev.danacast.model.Provider.providerNames;
 
 public class Category {
@@ -46,6 +47,7 @@ public class Category {
                 break;
             case CATEGORY_MOVIES:
                 items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, PROVIDER_GNULA, providerNames[PROVIDER_GNULA], null, null));
+                items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, PROVIDER_ZPELICULAS, providerNames[PROVIDER_ZPELICULAS], null, null));
                 items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, PROVIDER_PORDEDE, providerNames[PROVIDER_PORDEDE], null, null));
                 break;
             case CATEGORY_ANIME:

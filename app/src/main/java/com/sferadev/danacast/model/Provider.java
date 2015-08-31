@@ -9,6 +9,7 @@ import com.sferadev.danacast.providers.Pordede;
 import com.sferadev.danacast.providers.Seriesblanco;
 import com.sferadev.danacast.providers.Seriesyonkis;
 import com.sferadev.danacast.providers.Watchseries;
+import com.sferadev.danacast.providers.Zpeliculas;
 
 import java.util.ArrayList;
 
@@ -18,15 +19,17 @@ public class Provider {
     public static final int PROVIDER_WATCHSERIES = 2;
     public static final int PROVIDER_PORDEDE = 3;
     public static final int PROVIDER_GNULA = 4;
-    public static final int PROVIDER_JKANIME = 5;
-    public static final int PROVIDER_MUSIC163 = 6;
+    public static final int PROVIDER_ZPELICULAS = 5;
+    public static final int PROVIDER_JKANIME = 6;
+    public static final int PROVIDER_MUSIC163 = 7;
 
     public static String[] providerNames = new String[]{
             "SeriesBlanco",
             "SeriesYonkis",
             "Watchseries",
             "Pordede",
-            "Gnula",
+            "GNula",
+            "ZPeliculas",
             "JKAnime",
             "Music163"
     };
@@ -47,6 +50,8 @@ public class Provider {
                 return Pordede.getSearchResults(context, query);
             case PROVIDER_GNULA:
                 return Gnula.getSearchResults(query);
+            case PROVIDER_ZPELICULAS:
+                return Zpeliculas.getSearchResults(query);
             case PROVIDER_JKANIME:
                 return Jkanime.getSearchResults(query);
             case PROVIDER_MUSIC163:
@@ -71,6 +76,8 @@ public class Provider {
                 return Pordede.getPopularContent(context);
             case PROVIDER_GNULA:
                 return Gnula.getPopularContent();
+            case PROVIDER_ZPELICULAS:
+                return Zpeliculas.getPopularContent();
             case PROVIDER_JKANIME:
                 return Jkanime.getPopularContent();
             case PROVIDER_MUSIC163:
@@ -129,6 +136,8 @@ public class Provider {
                 return Pordede.getMovieLinks(context, url);
             case PROVIDER_GNULA:
                 return Gnula.getMovieLinks(url);
+            case PROVIDER_ZPELICULAS:
+                return Zpeliculas.getMovieLinks(url);
         }
         return Category.getCategories();
     }
@@ -149,6 +158,8 @@ public class Provider {
                 return Pordede.getExternalLink(context, url);
             case PROVIDER_GNULA:
                 return Gnula.getExternalLink(url);
+            case PROVIDER_ZPELICULAS:
+                return Zpeliculas.getExternalLink(url);
             case PROVIDER_JKANIME:
                 return Jkanime.getExternalLink(url);
             case PROVIDER_MUSIC163:
