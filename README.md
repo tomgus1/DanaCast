@@ -5,7 +5,7 @@ Enjoy your favorite content on-the-go through a set of content providers. With y
 Do you miss a feature or have you spotted a bug? Don't hesitate to visit our GitHub repository and fix them for yourself. Even if you're not capable of doing so, create an issue so we can fix it as soon as possible!
 
 ### Legal
-DanaCast, and it's own third parties, don't host nor distribute any kind of ilegal content. It allows the user to browse a catalog of non-indexed external links and open them with external apps. We do not hold liable to any kind of misuse with this content. The application just provides the opportunity to easily browse what's publicly available on the internet.
+DanaCast, and it's own third parties, don't host nor distribute any kind of illegal content. It allows the user to browse a catalog of non-indexed external links and open them with external apps. We do not hold liability to any kind of misuse with this content. The application just provides the opportunity to easily browse what's publicly available on the internet.
 
 ### License
 ```
