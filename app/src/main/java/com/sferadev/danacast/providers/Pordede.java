@@ -104,11 +104,15 @@ public class Pordede {
                             .cookies(loginResponse(context).cookies())
                             .referrer("http://www.google.com")
                             .get();
-                    Elements elements = document.select("div.modelContainer.defaultPopup");
-                    for (Element element : elements) {
-                        String title = element.getElementsByClass("title").first().text();
-                        String episodeUrl = element.getElementsByClass("title").first().attr("abs:href");
-                        result.add(new EntryModel(ContentUtils.TYPE_EPISODE, title, episodeUrl, null));
+                    Elements seasons = document.getElementsByClass("episodes");
+                    for (Element season : seasons) {
+                        Elements episodes = season.select("div.modelContainer.defaultPopup");
+                        String seasonName = season.getElementsByClass("checkSeason").first().attr("data-num");
+                        for (Element link : episodes) {
+                            String title = seasonName + "x" + link.getElementsByClass("title").first().text();
+                            String episodeUrl = link.getElementsByClass("title").first().attr("abs:href");
+                            result.add(new EntryModel(ContentUtils.TYPE_EPISODE, title, episodeUrl, null));
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
