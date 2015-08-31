@@ -18,7 +18,7 @@ public class UpdateUtils {
     private static final String URL = "https://raw.githubusercontent.com/SferaDev/DanaCast/master/updates/update.json";
 
     public static void checkUpdates(final Context context) {
-        if (getRemoteVersionCode() != getLocalVersionCode(context)) {
+        if (getRemoteVersionCode() > getLocalVersionCode(context)) {
             final DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getRemoteApkURL()));
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
