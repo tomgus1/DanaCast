@@ -143,7 +143,9 @@ public class Pordede {
                         String linkUrl = element.attr("abs:href");
                         String language = WordUtils.capitalize(element.getElementsByClass("flags").first()
                                 .child(0).classNames().toArray()[1].toString());
-                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
+                        String quality = element.getElementsByClass("quality").first().text();
+                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title +
+                                " (" + language + " | " + quality + ")", linkUrl, null));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -180,7 +182,9 @@ public class Pordede {
                         String linkUrl = element.attr("abs:href");
                         String language = WordUtils.capitalize(element.getElementsByClass("flags").first()
                                 .child(0).classNames().toArray()[1].toString());
-                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
+                        String quality = element.getElementsByClass("quality").first().text();
+                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title +
+                                " (" + language + " | " + quality + ")", linkUrl, null));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
