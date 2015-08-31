@@ -40,7 +40,7 @@ public class UpdateUtils {
         try {
             JSONObject jsonObject = new JSONObject(NetworkUtils.getURLOutput(URL)).getJSONObject("updateInfo");
             return Integer.parseInt(jsonObject.getString("versionCode"));
-        } catch (JSONException e) {
+        } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
             return -1;
         }
