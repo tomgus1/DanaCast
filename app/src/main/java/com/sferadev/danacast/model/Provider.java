@@ -17,11 +17,12 @@ public class Provider {
     public static final int PROVIDER_SERIESBLANCO = 0;
     public static final int PROVIDER_SERIESYONKIS = 1;
     public static final int PROVIDER_WATCHSERIES = 2;
-    public static final int PROVIDER_PORDEDE = 3;
+    public static final int PROVIDER_PORDEDE_SHOWS = 3;
     public static final int PROVIDER_GNULA = 4;
     public static final int PROVIDER_ZPELICULAS = 5;
-    public static final int PROVIDER_JKANIME = 6;
-    public static final int PROVIDER_MUSIC163 = 7;
+    public static final int PROVIDER_PORDEDE_MOVIES = 6;
+    public static final int PROVIDER_JKANIME = 7;
+    public static final int PROVIDER_MUSIC163 = 8;
 
     public static String[] providerNames = new String[]{
             "SeriesBlanco",
@@ -30,6 +31,7 @@ public class Provider {
             "Pordede",
             "GNula",
             "ZPeliculas",
+            "Pordede",
             "JKAnime",
             "Music163"
     };
@@ -42,7 +44,8 @@ public class Provider {
                 return Seriesyonkis.getSearchResults(query);
             case PROVIDER_WATCHSERIES:
                 return Watchseries.getSearchResults(query);
-            case PROVIDER_PORDEDE:
+            case PROVIDER_PORDEDE_SHOWS:
+            case PROVIDER_PORDEDE_MOVIES:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
                     return Category.getCategories();
@@ -68,12 +71,18 @@ public class Provider {
                 return Seriesyonkis.getPopularContent();
             case PROVIDER_WATCHSERIES:
                 return Watchseries.getPopularContent();
-            case PROVIDER_PORDEDE:
+            case PROVIDER_PORDEDE_SHOWS:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
                     return Category.getCategories();
                 }
-                return Pordede.getPopularContent(context);
+                return Pordede.getPopularShows(context);
+            case PROVIDER_PORDEDE_MOVIES:
+                if (!Pordede.isLoggedInCredentials(context)) {
+                    Pordede.loginWithCredentials(context);
+                    return Category.getCategories();
+                }
+                return Pordede.getPopularMovies(context);
             case PROVIDER_GNULA:
                 return Gnula.getPopularContent();
             case PROVIDER_ZPELICULAS:
@@ -94,7 +103,7 @@ public class Provider {
                 return Seriesyonkis.getEpisodeList(url);
             case PROVIDER_WATCHSERIES:
                 return Watchseries.getEpisodeList(url);
-            case PROVIDER_PORDEDE:
+            case PROVIDER_PORDEDE_SHOWS:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
                     return Category.getCategories();
@@ -114,7 +123,7 @@ public class Provider {
                 return Seriesyonkis.getEpisodeLinks(url);
             case PROVIDER_WATCHSERIES:
                 return Watchseries.getEpisodeLinks(url);
-            case PROVIDER_PORDEDE:
+            case PROVIDER_PORDEDE_SHOWS:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
                     return Category.getCategories();
@@ -128,7 +137,7 @@ public class Provider {
 
     public static ArrayList<EntryModel> getMovieLinks(Context context, int provider, String url) {
         switch (provider) {
-            case PROVIDER_PORDEDE:
+            case PROVIDER_PORDEDE_MOVIES:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
                     return Category.getCategories();
@@ -150,7 +159,8 @@ public class Provider {
                 return Seriesyonkis.getExternalLink(url);
             case PROVIDER_WATCHSERIES:
                 return Watchseries.getExternalLink(url);
-            case PROVIDER_PORDEDE:
+            case PROVIDER_PORDEDE_SHOWS:
+            case PROVIDER_PORDEDE_MOVIES:
                 if (!Pordede.isLoggedInCredentials(context)) {
                     Pordede.loginWithCredentials(context);
                     return null;

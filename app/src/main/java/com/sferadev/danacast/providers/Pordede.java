@@ -62,7 +62,7 @@ public class Pordede {
         }
     }
 
-    public static ArrayList<EntryModel> getPopularContent(final Context context) {
+    public static ArrayList<EntryModel> getPopularShows(final Context context) {
         final ArrayList<EntryModel> result = new ArrayList<>();
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -78,6 +78,38 @@ public class Pordede {
                         String showUrl = element.getElementsByClass("extended").first().attr("abs:href");
                         String picUrl = element.getElementsByClass("centeredPicFalse").first().attr("src");
                         result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, showUrl, picUrl));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+            return result;
+        } catch (InterruptedException | NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<EntryModel> getPopularMovies(final Context context) {
+        final ArrayList<EntryModel> result = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Document document = Jsoup.connect("http://www.pordede.com/pelis/index/showlist/viewed")
+                            .cookies(loginResponse(context).cookies())
+                            .referrer("http://www.google.com")
+                            .get();
+                    Elements elements = document.getElementsByClass("listContainer").first().getElementsByClass("ddItemContainer");
+                    for (Element element : elements) {
+                        String title = element.getElementsByClass("title").first().text();
+                        String showUrl = element.getElementsByClass("extended").first().attr("abs:href");
+                        String picUrl = element.getElementsByClass("centeredPicFalse").first().attr("src");
+                        result.add(new EntryModel(ContentUtils.TYPE_MOVIE, title, showUrl, picUrl));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
