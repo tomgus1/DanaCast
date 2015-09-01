@@ -20,12 +20,30 @@ public class Category {
     public static final int CATEGORY_MOVIES = 1;
     public static final int CATEGORY_ANIME = 2;
     public static final int CATEGORY_MUSIC = 3;
+    public static final int CATEGORY_ABOUT = 4;
+
+    public static final int ABOUT_GOOGLE_PLUS = 0;
+    public static final int ABOUT_PAYPAL = 1;
+    public static final int ABOUT_WEBSITE = 2;
 
     public static String[] categoryNames = new String[]{
             "TV Series",
             "Movies",
             "Anime",
-            "Music"
+            "Music",
+            "About"
+    };
+
+    public static String[] aboutNames = new String[]{
+            "Google Plus Community",
+            "PayPal donations",
+            "DanaCast website"
+    };
+
+    public static String[] aboutLinks = new String[]{
+            "https://plus.google.com/u/0/communities/117989078772127331921",
+            "https://paypal.me/sfera",
+            "http://danacast.me"
     };
 
     public static ArrayList<EntryModel> getCategories() {
@@ -34,6 +52,7 @@ public class Category {
         items.add(new EntryModel(ContentUtils.TYPE_CATEGORY, categoryNames[CATEGORY_MOVIES], null, null));
         items.add(new EntryModel(ContentUtils.TYPE_CATEGORY, categoryNames[CATEGORY_ANIME], null, null));
         items.add(new EntryModel(ContentUtils.TYPE_CATEGORY, categoryNames[CATEGORY_MUSIC], null, null));
+        items.add(new EntryModel(ContentUtils.TYPE_CATEGORY, categoryNames[CATEGORY_ABOUT], null, null));
         return items;
     }
 
@@ -56,6 +75,11 @@ public class Category {
                 break;
             case CATEGORY_MUSIC:
                 items.add(new EntryModel(ContentUtils.TYPE_PROVIDER, PROVIDER_MUSIC163, providerNames[PROVIDER_MUSIC163], null, null));
+                break;
+            case CATEGORY_ABOUT:
+                items.add(new EntryModel(ContentUtils.TYPE_EXTERNAL, aboutNames[ABOUT_GOOGLE_PLUS], aboutLinks[ABOUT_GOOGLE_PLUS], null));
+                items.add(new EntryModel(ContentUtils.TYPE_EXTERNAL, aboutNames[ABOUT_PAYPAL], aboutLinks[ABOUT_PAYPAL], null));
+                items.add(new EntryModel(ContentUtils.TYPE_EXTERNAL, aboutNames[ABOUT_WEBSITE], aboutLinks[ABOUT_WEBSITE], null));
                 break;
         }
         return items;

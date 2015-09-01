@@ -24,6 +24,7 @@ import com.sferadev.danacast.model.Category;
 import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.model.Provider;
 import com.sferadev.danacast.utils.ContentUtils;
+import com.sferadev.danacast.utils.NetworkUtils;
 import com.sferadev.danacast.utils.PreferenceUtils;
 import com.sferadev.danacast.utils.UpdateUtils;
 
@@ -194,6 +195,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ContentUtils.loadIntentDialog(this, LAST_CONTENT, entry, Provider.getExternalLink(this, getProvider(),
                         entry.getLink()));
                 break;
+            case ContentUtils.TYPE_EXTERNAL:
+                NetworkUtils.openChromeTab(this, entry.getLink());
         }
     }
 

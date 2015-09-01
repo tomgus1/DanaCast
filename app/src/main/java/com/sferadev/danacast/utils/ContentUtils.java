@@ -29,6 +29,7 @@ public class ContentUtils {
     public static final int TYPE_LINK = 4;
     public static final int TYPE_MOVIE = 5;
     public static final int TYPE_SONG = 6;
+    public static final int TYPE_EXTERNAL = 7;
 
     private static final String[] dialogOptions = {"Chromecast", "Download", "Copy link to the clipboard", "Open in Browser", "Open with..."};
 
