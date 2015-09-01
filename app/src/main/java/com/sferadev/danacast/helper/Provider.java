@@ -1,4 +1,4 @@
-package com.sferadev.danacast.model;
+package com.sferadev.danacast.helper;
 
 import android.content.Context;
 
@@ -10,6 +10,7 @@ import com.sferadev.danacast.providers.Seriesblanco;
 import com.sferadev.danacast.providers.Seriesyonkis;
 import com.sferadev.danacast.providers.Watchseries;
 import com.sferadev.danacast.providers.Zpeliculas;
+import com.sferadev.danacast.utils.EntryModel;
 
 import java.util.ArrayList;
 

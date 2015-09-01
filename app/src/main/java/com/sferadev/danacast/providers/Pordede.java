@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.sferadev.danacast.R;
 import com.sferadev.danacast.activities.MainActivity;
-import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.utils.ContentUtils;
+import com.sferadev.danacast.utils.EntryModel;
 import com.sferadev.danacast.utils.PreferenceUtils;
 
 import org.apache.commons.lang3.text.WordUtils;

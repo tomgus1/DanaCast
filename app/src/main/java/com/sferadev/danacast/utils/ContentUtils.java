@@ -16,8 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
-import com.sferadev.danacast.model.EntryModel;
-import com.sferadev.danacast.model.Server;
+import com.sferadev.danacast.helper.Server;
 
 import java.io.File;
 

@@ -1,7 +1,7 @@
 package com.sferadev.danacast.providers;
 
-import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.utils.ContentUtils;
+import com.sferadev.danacast.utils.EntryModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

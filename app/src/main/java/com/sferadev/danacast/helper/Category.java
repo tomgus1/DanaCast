@@ -1,19 +1,20 @@
-package com.sferadev.danacast.model;
+package com.sferadev.danacast.helper;
 
 import com.sferadev.danacast.utils.ContentUtils;
+import com.sferadev.danacast.utils.EntryModel;
 
 import java.util.ArrayList;
 
-import static com.sferadev.danacast.model.Provider.PROVIDER_GNULA;
-import static com.sferadev.danacast.model.Provider.PROVIDER_JKANIME;
-import static com.sferadev.danacast.model.Provider.PROVIDER_MUSIC163;
-import static com.sferadev.danacast.model.Provider.PROVIDER_PORDEDE_MOVIES;
-import static com.sferadev.danacast.model.Provider.PROVIDER_PORDEDE_SHOWS;
-import static com.sferadev.danacast.model.Provider.PROVIDER_SERIESBLANCO;
-import static com.sferadev.danacast.model.Provider.PROVIDER_SERIESYONKIS;
-import static com.sferadev.danacast.model.Provider.PROVIDER_WATCHSERIES;
-import static com.sferadev.danacast.model.Provider.PROVIDER_ZPELICULAS;
-import static com.sferadev.danacast.model.Provider.providerNames;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_GNULA;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_JKANIME;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_MUSIC163;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_PORDEDE_MOVIES;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_PORDEDE_SHOWS;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_SERIESBLANCO;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_SERIESYONKIS;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_WATCHSERIES;
+import static com.sferadev.danacast.helper.Provider.PROVIDER_ZPELICULAS;
+import static com.sferadev.danacast.helper.Provider.providerNames;
 
 public class Category {
     public static final int CATEGORY_SHOWS = 0;

@@ -2,8 +2,8 @@ package com.sferadev.danacast.providers;
 
 import android.util.Base64;
 
-import com.sferadev.danacast.model.EntryModel;
 import com.sferadev.danacast.utils.ContentUtils;
+import com.sferadev.danacast.utils.EntryModel;
 import com.sferadev.danacast.utils.NetworkUtils;
 
 import org.apache.http.HttpResponse;
