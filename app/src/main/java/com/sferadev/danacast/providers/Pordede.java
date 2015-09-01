@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.sferadev.danacast.R;
 import com.sferadev.danacast.activities.MainActivity;
-import com.sferadev.danacast.utils.ContentUtils;
-import com.sferadev.danacast.utils.EntryModel;
+import com.sferadev.danacast.helpers.Constants;
+import com.sferadev.danacast.models.EntryModel;
 import com.sferadev.danacast.utils.PreferenceUtils;
 
 import org.apache.commons.lang3.text.WordUtils;
@@ -44,7 +44,7 @@ public class Pordede {
                         String title = element.getElementsByClass("title").text();
                         String url = element.select("a.defaultLink.extended").first().attr("abs:href");
                         boolean isShow = element.getElementsByClass("searchType").text().equals("Serie");
-                        result.add(new EntryModel(isShow ? ContentUtils.TYPE_SHOW : ContentUtils.TYPE_MOVIE,
+                        result.add(new EntryModel(isShow ? Constants.TYPE_SHOW : Constants.TYPE_MOVIE,
                                 title, url, null));
                     }
                 } catch (IOException | NullPointerException e) {
@@ -77,7 +77,7 @@ public class Pordede {
                         String title = element.getElementsByClass("title").first().text();
                         String showUrl = element.getElementsByClass("extended").first().attr("abs:href");
                         String picUrl = element.getElementsByClass("centeredPicFalse").first().attr("src");
-                        result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, showUrl, picUrl));
+                        result.add(new EntryModel(Constants.TYPE_SHOW, title, showUrl, picUrl));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -109,7 +109,7 @@ public class Pordede {
                         String title = element.getElementsByClass("title").first().text();
                         String showUrl = element.getElementsByClass("extended").first().attr("abs:href");
                         String picUrl = element.getElementsByClass("centeredPicFalse").first().attr("src");
-                        result.add(new EntryModel(ContentUtils.TYPE_MOVIE, title, showUrl, picUrl));
+                        result.add(new EntryModel(Constants.TYPE_MOVIE, title, showUrl, picUrl));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -143,7 +143,7 @@ public class Pordede {
                         for (Element link : episodes) {
                             String title = seasonName + "x" + link.getElementsByClass("title").first().text();
                             String episodeUrl = link.getElementsByClass("title").first().attr("abs:href");
-                            result.add(new EntryModel(ContentUtils.TYPE_EPISODE, title, episodeUrl, null));
+                            result.add(new EntryModel(Constants.TYPE_EPISODE, title, episodeUrl, null));
                         }
                     }
                 } catch (IOException e) {
@@ -180,7 +180,7 @@ public class Pordede {
                         String language = WordUtils.capitalize(element.getElementsByClass("flags").first()
                                 .child(0).classNames().toArray()[1].toString());
                         String quality = element.getElementsByClass("quality").first().text();
-                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title +
+                        result.add(new EntryModel(Constants.TYPE_LINK, title +
                                 " (" + language + " | " + quality + ")", linkUrl, null));
                     }
                 } catch (IOException e) {
@@ -219,7 +219,7 @@ public class Pordede {
                         String language = WordUtils.capitalize(element.getElementsByClass("flags").first()
                                 .child(0).classNames().toArray()[1].toString());
                         String quality = element.getElementsByClass("quality").first().text();
-                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title +
+                        result.add(new EntryModel(Constants.TYPE_LINK, title +
                                 " (" + language + " | " + quality + ")", linkUrl, null));
                     }
                 } catch (IOException e) {

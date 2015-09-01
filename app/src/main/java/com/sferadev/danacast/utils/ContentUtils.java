@@ -16,20 +16,13 @@ import android.widget.Toast;
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
-import com.sferadev.danacast.helper.Server;
+import com.sferadev.danacast.helpers.Constants;
+import com.sferadev.danacast.helpers.Server;
+import com.sferadev.danacast.models.EntryModel;
 
 import java.io.File;
 
 public class ContentUtils {
-    public static final int TYPE_CATEGORY = 0;
-    public static final int TYPE_PROVIDER = 1;
-    public static final int TYPE_SHOW = 2;
-    public static final int TYPE_EPISODE = 3;
-    public static final int TYPE_LINK = 4;
-    public static final int TYPE_MOVIE = 5;
-    public static final int TYPE_SONG = 6;
-    public static final int TYPE_EXTERNAL = 7;
-
     private static final String[] dialogOptions = {"Chromecast", "Download", "Copy link to the clipboard", "Open in Browser", "Open with..."};
 
     public static void loadIntentDialog(final Context context, final String lastContent, final EntryModel entry, final String url) {
@@ -78,7 +71,7 @@ public class ContentUtils {
                 .setItems(dialogOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        boolean isSong = entry.getType() == TYPE_SONG;
+                        boolean isSong = entry.getType() == Constants.TYPE_SONG;
                         switch (which) {
                             case 0:
                                 loadFileChromecast(context, isSong, lastContent, url);

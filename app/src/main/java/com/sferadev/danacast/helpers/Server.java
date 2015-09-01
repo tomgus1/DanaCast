@@ -1,4 +1,4 @@
-package com.sferadev.danacast.helper;
+package com.sferadev.danacast.helpers;
 
 import com.sferadev.danacast.servers.Nowvideo;
 import com.sferadev.danacast.servers.Streamcloud;

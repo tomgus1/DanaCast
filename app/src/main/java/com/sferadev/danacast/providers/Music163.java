@@ -2,8 +2,8 @@ package com.sferadev.danacast.providers;
 
 import android.util.Base64;
 
-import com.sferadev.danacast.utils.ContentUtils;
-import com.sferadev.danacast.utils.EntryModel;
+import com.sferadev.danacast.helpers.Constants;
+import com.sferadev.danacast.models.EntryModel;
 import com.sferadev.danacast.utils.NetworkUtils;
 
 import org.apache.http.HttpResponse;
@@ -52,7 +52,7 @@ public class Music163 {
                     JSONArray tracks = response.getJSONObject("result").getJSONArray("songs");
                     for (int i = 0; i < 20; i++) {
                         JSONObject song = tracks.getJSONObject(i);
-                        result.add(new EntryModel(ContentUtils.TYPE_SONG, song.getString("name"),
+                        result.add(new EntryModel(Constants.TYPE_SONG, song.getString("name"),
                                 String.valueOf(song.getInt("id")), null));
                     }
                 } catch (IOException | JSONException e) {
@@ -81,7 +81,7 @@ public class Music163 {
                     JSONArray tracks = response.getJSONObject("result").getJSONArray("tracks");
                     for (int i = 0; i < 20; i++) {
                         JSONObject song = tracks.getJSONObject(i);
-                        result.add(new EntryModel(ContentUtils.TYPE_SONG, song.getString("name"),
+                        result.add(new EntryModel(Constants.TYPE_SONG, song.getString("name"),
                                 String.valueOf(song.getInt("id")), null));
                     }
                 } catch (JSONException e) {

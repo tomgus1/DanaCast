@@ -1,7 +1,7 @@
 package com.sferadev.danacast.providers;
 
-import com.sferadev.danacast.utils.ContentUtils;
-import com.sferadev.danacast.utils.EntryModel;
+import com.sferadev.danacast.helpers.Constants;
+import com.sferadev.danacast.models.EntryModel;
 
 import org.apache.commons.lang3.text.WordUtils;
 import org.jsoup.Jsoup;
@@ -25,7 +25,7 @@ public class Zpeliculas {
                     for (Element element : elements) {
                         String title = element.getElementsByTag("h2").first().attr("title");
                         String showUrl = element.getElementsByTag("a").first().attr("abs:href");
-                        result.add(new EntryModel(ContentUtils.TYPE_MOVIE, title, showUrl, null));
+                        result.add(new EntryModel(Constants.TYPE_MOVIE, title, showUrl, null));
                     }
                 } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
@@ -53,7 +53,7 @@ public class Zpeliculas {
                     for (Element element : elements) {
                         String title = element.getElementsByTag("h2").first().attr("title");
                         String showUrl = element.getElementsByTag("a").first().attr("abs:href");
-                        result.add(new EntryModel(ContentUtils.TYPE_MOVIE, title, showUrl, null));
+                        result.add(new EntryModel(Constants.TYPE_MOVIE, title, showUrl, null));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -82,7 +82,7 @@ public class Zpeliculas {
                         String linkUrl = element.getElementsByTag("a").first().attr("abs:href");
                         String title = WordUtils.capitalize(linkUrl.replace("http://", "").split("\\.")[0]);
                         String language = element.getElementsByTag("div").first().attr("title");
-                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
+                        result.add(new EntryModel(Constants.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

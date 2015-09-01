@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="about_names">
+        <item>Google Plus Community</item>
+        <item>PayPal donations</item>
+        <item>DanaCast website</item>
+    </string-array>
+
+    <string-array name="about_links">
+        <item>https://plus.google.com/u/0/communities/117989078772127331921</item>
+        <item>https://paypal.me/sfera</item>
+        <item>http://danacast.me</item>
+    </string-array>
+
+    <string-array name="category_names">
+        <item>TV Series</item>
+        <item>Movies</item>
+        <item>Anime</item>
+        <item>Music</item>
+        <item>About</item>
+    </string-array>
+
+    <string-array name="provider_names">
+        <item>SeriesBlanco</item>
+        <item>SeriesYonkis</item>
+        <item>Watchseries</item>
+        <item>Pordede</item>
+        <item>GNula</item>
+        <item>ZPeliculas</item>
+        <item>Pordede</item>
+        <item>JKAnime</item>
+        <item>Music163</item>
+    </string-array>
+</resources>

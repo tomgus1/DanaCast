@@ -1,7 +1,7 @@
 package com.sferadev.danacast.providers;
 
-import com.sferadev.danacast.utils.ContentUtils;
-import com.sferadev.danacast.utils.EntryModel;
+import com.sferadev.danacast.helpers.Constants;
+import com.sferadev.danacast.models.EntryModel;
 
 import org.apache.commons.lang3.text.WordUtils;
 import org.jsoup.Jsoup;
@@ -27,7 +27,7 @@ public class Seriesblanco {
                         if (element.hasText()) {
                             String title = element.text();
                             String url = element.attr("abs:href");
-                            result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, null));
+                            result.add(new EntryModel(Constants.TYPE_SHOW, title, url, null));
                         }
                     }
                 } catch (IOException e) {
@@ -58,7 +58,7 @@ public class Seriesblanco {
                         String title = element.getElementsByTag("img").first().attr("title");
                         String showUrl = element.getElementsByTag("a").first().attr("abs:href");
                         String pic = element.getElementsByTag("img").first().attr("src");
-                        result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, showUrl, pic));
+                        result.add(new EntryModel(Constants.TYPE_SHOW, title, showUrl, pic));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -90,7 +90,7 @@ public class Seriesblanco {
                             if (element.hasText()) {
                                 String title = element.text();
                                 String episodeUrl = element.attr("abs:href");
-                                result.add(new EntryModel(ContentUtils.TYPE_EPISODE, title, episodeUrl, null));
+                                result.add(new EntryModel(Constants.TYPE_EPISODE, title, episodeUrl, null));
                             }
                         }
                     }
@@ -125,7 +125,7 @@ public class Seriesblanco {
                             String linkUrl = element.getElementsByTag("a").first().attr("abs:href");
                             String language = element.getElementsByTag("img").get(0)
                                     .attr("src").replace("/banderas/", "").split("\\.")[0].toUpperCase();
-                            result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
+                            result.add(new EntryModel(Constants.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
                         }
                     }
                 } catch (IOException e) {

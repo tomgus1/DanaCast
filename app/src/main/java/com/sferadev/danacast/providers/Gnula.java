@@ -1,7 +1,7 @@
 package com.sferadev.danacast.providers;
 
-import com.sferadev.danacast.utils.ContentUtils;
-import com.sferadev.danacast.utils.EntryModel;
+import com.sferadev.danacast.helpers.Constants;
+import com.sferadev.danacast.models.EntryModel;
 
 import org.apache.commons.lang3.text.WordUtils;
 import org.jsoup.Jsoup;
@@ -27,7 +27,7 @@ public class Gnula {
                         String title = link.text().replace("Ver ", "").split("online \\|")[0];
                         String url = link.attr("abs:href");
                         if (link.text().contains("Ver"))
-                            result.add(new EntryModel(ContentUtils.TYPE_MOVIE, title, url, null));
+                            result.add(new EntryModel(Constants.TYPE_MOVIE, title, url, null));
                     }
                 } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
@@ -57,7 +57,7 @@ public class Gnula {
                         String title = element.getElementsByTag("img").first().attr("title").split("\\[")[0];
                         String showUrl = element.attr("abs:href");
                         String picUrl = element.getElementsByTag("img").first().attr("src");
-                        result.add(new EntryModel(ContentUtils.TYPE_MOVIE, title, showUrl, picUrl));
+                        result.add(new EntryModel(Constants.TYPE_MOVIE, title, showUrl, picUrl));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -88,7 +88,7 @@ public class Gnula {
                         for (Element element : elements.get(i).getElementsByTag("a")) {
                             String title = WordUtils.capitalize(element.getElementsByTag("span").first().attr("class"));
                             String linkUrl = element.attr("abs:href");
-                            result.add(new EntryModel(ContentUtils.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
+                            result.add(new EntryModel(Constants.TYPE_LINK, title + " (" + language + ")", linkUrl, null));
                         }
                     }
                 } catch (IOException e) {

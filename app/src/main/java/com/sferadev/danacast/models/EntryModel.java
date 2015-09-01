@@ -1,4 +1,4 @@
-package com.sferadev.danacast.utils;
+package com.sferadev.danacast.models;
 
 public class EntryModel {
 

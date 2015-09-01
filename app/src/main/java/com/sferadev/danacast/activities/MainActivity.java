@@ -20,10 +20,11 @@ import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
 import com.sferadev.danacast.R;
-import com.sferadev.danacast.helper.Category;
-import com.sferadev.danacast.helper.Provider;
+import com.sferadev.danacast.helpers.Category;
+import com.sferadev.danacast.helpers.Constants;
+import com.sferadev.danacast.helpers.Provider;
+import com.sferadev.danacast.models.EntryModel;
 import com.sferadev.danacast.utils.ContentUtils;
-import com.sferadev.danacast.utils.EntryModel;
 import com.sferadev.danacast.utils.NetworkUtils;
 import com.sferadev.danacast.utils.PreferenceUtils;
 import com.sferadev.danacast.utils.UpdateUtils;
@@ -155,17 +156,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         EntryModel entry = mContent.get(mContent.size() - 1).get(position);
         switch (entry.getType()) {
-            case ContentUtils.TYPE_CATEGORY:
+            case Constants.TYPE_CATEGORY:
                 mContent.add(Category.getProviders(position));
                 updateListview();
                 break;
-            case ContentUtils.TYPE_PROVIDER:
+            case Constants.TYPE_PROVIDER:
                 PreferenceUtils.setPreference(this, PreferenceUtils.PROPERTY_LAST_PROVIDER,
                         mContent.get(mContent.size() - 1).get(position).getId());
                 mContent.add(Provider.getPopularContent(this, getProvider()));
                 updateListview();
                 break;
-            case ContentUtils.TYPE_SHOW:
+            case Constants.TYPE_SHOW:
                 ArrayList<EntryModel> episodes = Provider.getEpisodeList(this, getProvider(), entry.getLink());
                 if (!episodes.isEmpty()) {
                     LAST_CONTENT = entry.getTitle();
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     updateListview();
                 }
                 break;
-            case ContentUtils.TYPE_EPISODE:
+            case Constants.TYPE_EPISODE:
                 ArrayList<EntryModel> episodeLinks = Provider.getEpisodeLinks(this, getProvider(), entry.getLink());
                 if (!episodeLinks.isEmpty()) {
                     LAST_CONTENT = LAST_CONTENT + " " + entry.getTitle();
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     updateListview();
                 }
                 break;
-            case ContentUtils.TYPE_MOVIE:
+            case Constants.TYPE_MOVIE:
                 ArrayList<EntryModel> movieLinks = Provider.getMovieLinks(this, getProvider(), entry.getLink());
                 if (!movieLinks.isEmpty()) {
                     LAST_CONTENT = entry.getTitle();
@@ -189,13 +190,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     updateListview();
                 }
                 break;
-            case ContentUtils.TYPE_SONG:
+            case Constants.TYPE_SONG:
                 LAST_CONTENT = entry.getTitle();
-            case ContentUtils.TYPE_LINK:
+            case Constants.TYPE_LINK:
                 ContentUtils.loadIntentDialog(this, LAST_CONTENT, entry, Provider.getExternalLink(this, getProvider(),
                         entry.getLink()));
                 break;
-            case ContentUtils.TYPE_EXTERNAL:
+            case Constants.TYPE_EXTERNAL:
                 NetworkUtils.openChromeTab(this, entry.getLink());
         }
     }

@@ -1,7 +1,7 @@
 package com.sferadev.danacast.providers;
 
-import com.sferadev.danacast.utils.ContentUtils;
-import com.sferadev.danacast.utils.EntryModel;
+import com.sferadev.danacast.helpers.Constants;
+import com.sferadev.danacast.models.EntryModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,7 +24,7 @@ public class Jkanime {
                     for (Element element : elements) {
                         String title = element.text();
                         String url = element.attr("abs:href");
-                        result.add(new EntryModel(ContentUtils.TYPE_SHOW, title, url, null));
+                        result.add(new EntryModel(Constants.TYPE_SHOW, title, url, null));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -51,7 +51,7 @@ public class Jkanime {
                     Elements elements = document.select("div.publibox").first()
                             .getElementsByTag("span");
                     for (Element element : elements) {
-                        result.add(new EntryModel(ContentUtils.TYPE_SHOW,
+                        result.add(new EntryModel(Constants.TYPE_SHOW,
                                 element.getElementsByTag("a").first().text(),
                                 element.getElementsByTag("a").first().attr("abs:href"), null));
                     }
@@ -80,7 +80,7 @@ public class Jkanime {
                     String[] lastPage = document.getElementsByClass("listnavi").first().lastElementSibling().text().split(" ");
                     int episodes = Integer.parseInt(lastPage[lastPage.length - 1]);
                     for (int i = 1; i <= episodes; i++) {
-                        result.add(new EntryModel(ContentUtils.TYPE_EPISODE, "Episode " + i, url + i + "/", null));
+                        result.add(new EntryModel(Constants.TYPE_EPISODE, "Episode " + i, url + i + "/", null));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -109,7 +109,7 @@ public class Jkanime {
                     for (int i = 0; i < videoElements.size(); i++) {
                         String title = titleElements.get(i).text();
                         String linkUrl = videoElements.get(i).attr("src");
-                        result.add(new EntryModel(ContentUtils.TYPE_LINK, title, linkUrl, null));
+                        result.add(new EntryModel(Constants.TYPE_LINK, title, linkUrl, null));
                     }
                 } catch (IOException | IndexOutOfBoundsException e) {
                     e.printStackTrace();
