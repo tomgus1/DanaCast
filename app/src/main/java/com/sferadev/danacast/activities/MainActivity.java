@@ -66,6 +66,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ListView mListView = (ListView) findViewById(R.id.listview);
 
         mListView.setOnItemClickListener(this);
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                EntryModel entry = mContent.get(mContent.size() - 1).get(position);
+                if (entry.getLink() != null) {
+                    ContentUtils.addToClipboard(MainActivity.this, entry.getLink());
+                }
+                return false;
+            }
+        });
 
         handleIntent(getIntent());
 

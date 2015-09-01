@@ -2,6 +2,8 @@ package com.sferadev.danacast.utils;
 
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,7 +30,7 @@ public class ContentUtils {
     public static final int TYPE_MOVIE = 5;
     public static final int TYPE_SONG = 6;
 
-    private static final String[] dialogOptions = {"Chromecast", "Download", "Open in Browser", "Open with..."};
+    private static final String[] dialogOptions = {"Chromecast", "Download", "Copy link to the clipboard", "Open in Browser", "Open with..."};
 
     public static void loadIntentDialog(final Context context, final String lastContent, final EntryModel entry, final String url) {
         final String[] finalUrl = new String[1];
@@ -85,9 +87,12 @@ public class ContentUtils {
                                 loadFileDownload(context, isSong, lastContent, url);
                                 break;
                             case 2:
-                                NetworkUtils.openChromeTab(context, url);
+                                addToClipboard(context, url);
                                 break;
                             case 3:
+                                NetworkUtils.openChromeTab(context, url);
+                                break;
+                            case 4:
                                 loadFileExternal(context, isSong, url);
                                 break;
                         }
@@ -122,5 +127,12 @@ public class ContentUtils {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.parse(url), song ? "audio/mp3" : "video/mp4");
         context.startActivity(intent);
+    }
+
+    public static void addToClipboard(Context context, String string) {
+        ClipboardManager clipboard = (ClipboardManager)
+                context.getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(ClipData.newPlainText("simple text", string));
+        Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_LONG).show();
     }
 }
