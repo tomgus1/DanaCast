@@ -1,15 +1,23 @@
 package com.sferadev.danacast;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.player.VideoCastControllerActivity;
 
 public class App extends Application {
 
+    private static Context mContext;
+
+    public static Context getContext() {
+        return mContext;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = this;
         String applicationId = getString(R.string.app_id);
 
         VideoCastManager.
