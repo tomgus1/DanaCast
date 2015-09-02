@@ -286,14 +286,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onStreamError(Torrent torrent, Exception e) {
-        Log.d("Dana", "Torrent: onStreamError");
         e.printStackTrace();
     }
 
     @Override
     public void onStreamReady(Torrent torrent) {
-        Log.d("Dana", "Torrent: onStreamReady");
-        Log.d("Dana", "Torrent file: " + torrent.getVideoFile().getPath());
         torrentProgressDialog.cancel();
         ContentUtils.loadOptionsDialog(this, torrent);
     }
