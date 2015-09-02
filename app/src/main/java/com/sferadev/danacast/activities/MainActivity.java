@@ -1,5 +1,6 @@
 package com.sferadev.danacast.activities;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.github.sv244.torrentstream.StreamStatus;
+import com.github.sv244.torrentstream.Torrent;
+import com.github.sv244.torrentstream.listeners.TorrentListener;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
@@ -33,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener, TorrentListener {
 
     private VideoCastManager mCastManager;
     private MiniController mMini;
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ArrayAdapter mAdapter;
 
     private String LAST_CONTENT;
+
+    private ProgressDialog torrentProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,4 +245,45 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    @Override
+    public void onStreamPrepared(Torrent torrent) {
+        Log.d("Dana", "Torrent: onStreamPrepared");
+        torrentProgressDialog = new ProgressDialog(this);
+        torrentProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        torrentProgressDialog.setMessage("Loading. Please wait...");
+        torrentProgressDialog.setCanceledOnTouchOutside(false);
+        torrentProgressDialog.show();
+        torrent.startDownload();
+    }
+
+    @Override
+    public void onStreamStarted(Torrent torrent) {
+        Log.d("Dana", "Torrent: onStreamStarted");
+    }
+
+    @Override
+    public void onStreamError(Torrent torrent, Exception e) {
+        Log.d("Dana", "Torrent: onStreamError");
+        e.printStackTrace();
+    }
+
+    @Override
+    public void onStreamReady(Torrent torrent) {
+        Log.d("Dana", "Torrent: onStreamReady");
+        Log.d("Dana", "Torrent file: " + torrent.getVideoFile());
+        //TODO
+    }
+
+    @Override
+    public void onStreamProgress(Torrent torrent, StreamStatus streamStatus) {
+        if (streamStatus.bufferProgress <= 100 && torrentProgressDialog.getProgress() < 100
+                && torrentProgressDialog.getProgress() != streamStatus.bufferProgress) {
+            torrentProgressDialog.setProgress(streamStatus.bufferProgress);
+        }
+    }
+
+    @Override
+    public void onStreamStopped() {
+        Log.d("Dana", "Torrent: onStreamStopped");
+    }
 }
