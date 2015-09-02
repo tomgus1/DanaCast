@@ -38,6 +38,7 @@ import com.sferadev.danacast.utils.PreferenceUtils;
 import com.sferadev.danacast.utils.UpdateUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private TorrentStream mTorrentStream;
     private ProgressDialog torrentProgressDialog;
+    private String mTorrentCachePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,14 +106,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mListView.setAdapter(mAdapter);
 
         TorrentOptions torrentOptions = new TorrentOptions();
-        torrentOptions.setSaveLocation(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS) + File.separator + "DanaCast" + File.separator + "TorrentCache");
+        mTorrentCachePath = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS) + File.separator + "DanaCast" + File.separator + "TorrentCache";
+        torrentOptions.setSaveLocation(mTorrentCachePath);
         torrentOptions.setRemoveFilesAfterStop(true);
 
         mTorrentStream = TorrentStream.init(torrentOptions);
         mTorrentStream.addListener(this);
 
         UpdateUtils.checkUpdates(this);
+
+        clearTorrentCache();
     }
 
     @Override
@@ -304,5 +309,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onStreamStopped() {
         Log.d("Dana", "Torrent: onStreamStopped");
+    }
+
+    private void clearTorrentCache() {
+        File dir = new File(mTorrentCachePath);
+        if (dir.exists()) {
+            String deleteCmd = "rm -rf " + mTorrentCachePath;
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                runtime.exec(deleteCmd);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
