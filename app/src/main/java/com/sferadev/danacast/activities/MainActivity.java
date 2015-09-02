@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,8 @@ import android.widget.ListView;
 
 import com.github.sv244.torrentstream.StreamStatus;
 import com.github.sv244.torrentstream.Torrent;
+import com.github.sv244.torrentstream.TorrentOptions;
+import com.github.sv244.torrentstream.TorrentStream;
 import com.github.sv244.torrentstream.listeners.TorrentListener;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
@@ -34,6 +37,7 @@ import com.sferadev.danacast.utils.NetworkUtils;
 import com.sferadev.danacast.utils.PreferenceUtils;
 import com.sferadev.danacast.utils.UpdateUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private String LAST_CONTENT;
 
+    private TorrentStream mTorrentStream;
     private ProgressDialog torrentProgressDialog;
 
     @Override
@@ -97,6 +102,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 R.id.drawer_text,
                 items);
         mListView.setAdapter(mAdapter);
+
+        TorrentOptions torrentOptions = new TorrentOptions();
+        torrentOptions.setSaveLocation(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS) + File.separator + "DanaCast" + File.separator + "TorrentCache");
+        torrentOptions.setRemoveFilesAfterStop(true);
+
+        mTorrentStream = TorrentStream.init(torrentOptions);
+        mTorrentStream.addListener(this);
 
         UpdateUtils.checkUpdates(this);
     }
@@ -205,6 +218,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case Constants.TYPE_EXTERNAL:
                 NetworkUtils.openChromeTab(this, entry.getLink());
+                break;
+            case Constants.TYPE_TORRENT:
+                if (mTorrentStream.isStreaming()) mTorrentStream.stopStream();
+                mTorrentStream.startStream(entry.getLink());
+                break;
         }
     }
 
@@ -270,8 +288,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onStreamReady(Torrent torrent) {
         Log.d("Dana", "Torrent: onStreamReady");
-        Log.d("Dana", "Torrent file: " + torrent.getVideoFile());
-        //TODO
+        Log.d("Dana", "Torrent file: " + torrent.getVideoFile().getPath());
+        torrentProgressDialog.cancel();
+        ContentUtils.loadOptionsDialog(this, torrent);
     }
 
     @Override

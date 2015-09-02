@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.github.sv244.torrentstream.Torrent;
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaMetadata;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
@@ -21,6 +22,7 @@ import com.sferadev.danacast.helpers.Server;
 import com.sferadev.danacast.models.EntryModel;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ContentUtils {
     private static final String[] dialogOptions = {"Chromecast", "Download", "Copy link to the clipboard", "Open in Browser", "Open with..."};
@@ -95,6 +97,46 @@ public class ContentUtils {
         dialog.show();
     }
 
+    public static void loadOptionsDialog(final Context context, final Torrent torrent) {
+        AlertDialog dialog = new AlertDialog.Builder(context,
+                android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth)
+                .setTitle(torrent.getSaveLocation().toString())
+                .setItems(dialogOptions, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                if (!torrent.getVideoFile().getPath().contains("mp4")) {
+                                    Toast.makeText(context, "File type not supported", Toast.LENGTH_LONG).show();
+                                    break;
+                                }
+                                try {
+                                    new WebServer(torrent.getVideoFile().toString()).start();
+                                    loadLiveChromecast(context, torrent.getSaveLocation().toString(),
+                                            "http://" + NetworkUtils.getIPAddress(context) + ":8080");
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 1:
+                                Toast.makeText(context, "Feature not available yet", Toast.LENGTH_LONG).show();
+                                break;
+                            case 2:
+                                addToClipboard(context, torrent.getVideoFile().getPath());
+                                break;
+                            case 3:
+                                Toast.makeText(context, "Feature not available", Toast.LENGTH_LONG).show();
+                                break;
+                            case 4:
+                                loadFileExternal(context, false, Uri.fromFile(torrent.getVideoFile()));
+                                break;
+                        }
+                    }
+                })
+                .create();
+        dialog.show();
+    }
+
     private static void loadFileChromecast(Context context, boolean song, String lastContent, String url) {
         if (!VideoCastManager.getInstance().isConnected()) return;
         MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
@@ -103,6 +145,19 @@ public class ContentUtils {
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
                 .setContentType(song ? "audio/mp3" : "video/mp4")
                 .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
+                .setMetadata(mediaMetadata)
+                .build();
+        VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
+    }
+
+    private static void loadLiveChromecast(Context context, String lastContent, String url) {
+        if (!VideoCastManager.getInstance().isConnected()) return;
+        MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
+        mediaMetadata.putString(MediaMetadata.KEY_TITLE, lastContent);
+        mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
+        MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
+                .setContentType("video/mp4")
+                .setStreamType(MediaInfo.STREAM_TYPE_LIVE)
                 .setMetadata(mediaMetadata)
                 .build();
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
@@ -117,8 +172,12 @@ public class ContentUtils {
     }
 
     private static void loadFileExternal(Context context, boolean song, String url) {
+        loadFileExternal(context, song, Uri.parse(url));
+    }
+
+    private static void loadFileExternal(Context context, boolean song, Uri uri) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(url), song ? "audio/mp3" : "video/mp4");
+        intent.setDataAndType(uri, song ? "audio/mp3" : "video/mp4");
         context.startActivity(intent);
     }
 
