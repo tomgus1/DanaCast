@@ -167,7 +167,8 @@ public class ContentUtils {
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
-                File.separator + "DanaCast" + File.separator + lastContent + (song ? ".mp3" : ".mp4"));
+                File.separator + "DanaCast" + File.separator + "Downloads" + File.separator +
+                        lastContent + (song ? ".mp3" : ".mp4"));
         downloadManager.enqueue(request);
     }
 
