@@ -21,11 +21,14 @@ import com.sferadev.danacast.helpers.Constants;
 import com.sferadev.danacast.helpers.Server;
 import com.sferadev.danacast.models.EntryModel;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.IOException;
 
 public class ContentUtils {
     private static final String[] dialogOptions = {"Chromecast", "Download", "Copy link to the clipboard", "Open in Browser", "Open with..."};
+    private static final String[] supportedExtensions = {"mp4", "mp3", "avi", "m3u8", "aac", "wav"};
 
     public static void loadIntentDialog(final Context context, final String lastContent, final EntryModel entry, final String url) {
         final String[] finalUrl = new String[1];
@@ -78,7 +81,7 @@ public class ContentUtils {
                                 loadFileChromecast(context, entry.getType(), title, url);
                                 break;
                             case 1:
-                                loadFileDownload(context, title, url);
+                                loadFileDownload(context, entry.getType(), title, url);
                                 break;
                             case 2:
                                 addToClipboard(context, url);
@@ -141,7 +144,7 @@ public class ContentUtils {
         mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
                 .setContentType((type == Constants.TYPE_SONG ? "audio/" : "video/") +
-                        url.substring(url.lastIndexOf(".") + 1))
+                        FilenameUtils.getExtension(url))
                 .setStreamType(type == Constants.TYPE_TORRENT || type == Constants.TYPE_LIVE ? MediaInfo.STREAM_TYPE_LIVE
                         : MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(mediaMetadata)
@@ -149,12 +152,13 @@ public class ContentUtils {
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
-    private static void loadFileDownload(Context context, String title, String url) {
+    private static void loadFileDownload(Context context, int type, String title, String url) {
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
-                File.separator + "DanaCast" + File.separator + "Downloads" + File.separator +
-                        title + url.replace(".psd", ".mp4").substring(url.lastIndexOf(".")));
+        String fileName = !FilenameUtils.isExtension(url, supportedExtensions) ? title +
+                (type == Constants.TYPE_SONG ? ".mp3" : ".mp4") : title + "." + FilenameUtils.getExtension(url);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, File.separator + "DanaCast" +
+                File.separator + "Downloads" + File.separator + fileName);
         downloadManager.enqueue(request);
     }
 
