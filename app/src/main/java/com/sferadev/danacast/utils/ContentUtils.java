@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.github.sv244.torrentstream.Torrent;
@@ -133,26 +134,30 @@ public class ContentUtils {
         dialog.show();
     }
 
-    private static void loadFileChromecast(Context context, int type, String lastContent, String url) {
+    private static void loadFileChromecast(Context context, int type, String title, String url) {
         if (!VideoCastManager.getInstance().isConnected()) return;
-        MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
-        mediaMetadata.putString(MediaMetadata.KEY_TITLE, lastContent);
+        MediaMetadata mediaMetadata = new MediaMetadata(type == Constants.TYPE_SONG ?
+                MediaMetadata.MEDIA_TYPE_MUSIC_TRACK : MediaMetadata.MEDIA_TYPE_MOVIE);
+        mediaMetadata.putString(MediaMetadata.KEY_TITLE, title);
         mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
-                .setContentType(type == Constants.TYPE_SONG ? "audio/*" : "video/*")
-                .setStreamType(type == Constants.TYPE_TORRENT || type == Constants.TYPE_LIVE
-                        ? MediaInfo.STREAM_TYPE_LIVE : MediaInfo.STREAM_TYPE_BUFFERED)
+                .setContentType((type == Constants.TYPE_SONG ? "audio/" : "video/") +
+                        url.substring(url.lastIndexOf(".") + 1))
+                .setStreamType(type == Constants.TYPE_TORRENT || type == Constants.TYPE_LIVE ? MediaInfo.STREAM_TYPE_LIVE
+                        : MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(mediaMetadata)
                 .build();
+        Log.d("Dana", (type == Constants.TYPE_SONG ? "audio/" : "video/") +
+                url.substring(url.lastIndexOf(".") + 1));
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
-    private static void loadFileDownload(Context context, String lastContent, String url) {
+    private static void loadFileDownload(Context context, String title, String url) {
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
                 File.separator + "DanaCast" + File.separator + "Downloads" + File.separator +
-                        lastContent + url.replace(".psd", ".mp4").substring(url.lastIndexOf(".")));
+                        title + url.replace(".psd", ".mp4").substring(url.lastIndexOf(".")));
         downloadManager.enqueue(request);
     }
 

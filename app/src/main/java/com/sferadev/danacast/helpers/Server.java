@@ -8,7 +8,8 @@ public class Server {
         return url.contains("streamcloud") ||
                 url.contains("nowvideo") ||
                 url.contains("jkmedia") ||
-                url.contains("music");
+                url.contains("music") ||
+                url.contains("m3u8");
     }
 
     public static String getVideoPath(String url) {

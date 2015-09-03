@@ -215,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     updateListview();
                 }
                 break;
+            case Constants.TYPE_LIVE:
+                entry.setLink("http://crossorigin.me/" + entry.getLink());
             case Constants.TYPE_SONG:
                 LAST_CONTENT = entry.getTitle();
             case Constants.TYPE_LINK:
