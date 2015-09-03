@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.github.sv244.torrentstream.Torrent;
@@ -147,8 +146,6 @@ public class ContentUtils {
                         : MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(mediaMetadata)
                 .build();
-        Log.d("Dana", (type == Constants.TYPE_SONG ? "audio/" : "video/") +
-                url.substring(url.lastIndexOf(".") + 1));
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
