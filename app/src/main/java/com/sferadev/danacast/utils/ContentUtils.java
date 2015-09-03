@@ -139,7 +139,7 @@ public class ContentUtils {
         mediaMetadata.putString(MediaMetadata.KEY_TITLE, lastContent);
         mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
-                .setContentType(type == Constants.TYPE_SONG ? "audio/mp3" : "video/mp4")
+                .setContentType(type == Constants.TYPE_SONG ? "audio/*" : "video/*")
                 .setStreamType(type == Constants.TYPE_TORRENT || type == Constants.TYPE_LIVE
                         ? MediaInfo.STREAM_TYPE_LIVE : MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(mediaMetadata)
@@ -162,7 +162,7 @@ public class ContentUtils {
 
     private static void loadFileExternal(Context context, int type, Uri uri) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, type == Constants.TYPE_SONG ? "audio/mp3" : "video/mp4");
+        intent.setDataAndType(uri, type == Constants.TYPE_SONG ? "audio/*" : "video/*");
         context.startActivity(intent);
     }
 
