@@ -152,7 +152,7 @@ public class ContentUtils {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
                 File.separator + "DanaCast" + File.separator + "Downloads" + File.separator +
-                        lastContent + url.substring(url.lastIndexOf(".")));
+                        lastContent + url.replace(".psd", ".mp4").substring(url.lastIndexOf(".")));
         downloadManager.enqueue(request);
     }
 
