@@ -10,7 +10,7 @@ public class Constants {
     public static final int TYPE_SONG = 6;
     public static final int TYPE_EXTERNAL = 7;
     public static final int TYPE_TORRENT = 8;
-    public static final int TYPE_LIVE = 8;
+    public static final int TYPE_LIVE = 9;
 
     public static final int CATEGORY_SHOWS = 0;
     public static final int CATEGORY_MOVIES = 1;
