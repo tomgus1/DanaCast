@@ -66,20 +66,19 @@ public class ContentUtils {
         task.execute();
     }
 
-    private static void loadOptionsDialog(final Context context, final String lastContent, final EntryModel entry, final String url) {
+    private static void loadOptionsDialog(final Context context, final String title, final EntryModel entry, final String url) {
         AlertDialog dialog = new AlertDialog.Builder(context,
                 android.R.style.Theme_DeviceDefault_Light_Dialog_NoActionBar_MinWidth)
                 .setTitle(url)
                 .setItems(dialogOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        boolean isSong = entry.getType() == Constants.TYPE_SONG;
                         switch (which) {
                             case 0:
-                                loadFileChromecast(context, isSong, lastContent, url);
+                                loadFileChromecast(context, entry.getType(), title, url);
                                 break;
                             case 1:
-                                loadFileDownload(context, isSong, lastContent, url);
+                                loadFileDownload(context, entry.getType(), title, url);
                                 break;
                             case 2:
                                 addToClipboard(context, url);
@@ -88,7 +87,7 @@ public class ContentUtils {
                                 NetworkUtils.openChromeTab(context, url);
                                 break;
                             case 4:
-                                loadFileExternal(context, isSong, url);
+                                loadFileExternal(context, entry.getType(), url);
                                 break;
                         }
                     }
@@ -106,14 +105,11 @@ public class ContentUtils {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                if (!torrent.getVideoFile().getPath().contains("mp4")) {
-                                    Toast.makeText(context, "File type not supported", Toast.LENGTH_LONG).show();
-                                    break;
-                                }
                                 try {
                                     new WebServer(torrent.getVideoFile().toString()).start();
-                                    loadLiveChromecast(context, torrent.getSaveLocation().toString(),
-                                            "http://" + NetworkUtils.getIPAddress(context) + ":8080");
+                                    loadFileChromecast(context, Constants.TYPE_TORRENT,
+                                            torrent.getSaveLocation().toString(), "http://" +
+                                                    NetworkUtils.getIPAddress(context) + ":8080");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -128,7 +124,7 @@ public class ContentUtils {
                                 Toast.makeText(context, "Feature not available", Toast.LENGTH_LONG).show();
                                 break;
                             case 4:
-                                loadFileExternal(context, false, Uri.fromFile(torrent.getVideoFile()));
+                                loadFileExternal(context, Constants.TYPE_TORRENT, Uri.fromFile(torrent.getVideoFile()));
                                 break;
                         }
                     }
@@ -137,48 +133,36 @@ public class ContentUtils {
         dialog.show();
     }
 
-    private static void loadFileChromecast(Context context, boolean song, String lastContent, String url) {
+    private static void loadFileChromecast(Context context, int type, String lastContent, String url) {
         if (!VideoCastManager.getInstance().isConnected()) return;
         MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
         mediaMetadata.putString(MediaMetadata.KEY_TITLE, lastContent);
         mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
-                .setContentType(song ? "audio/mp3" : "video/mp4")
-                .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
+                .setContentType(type == Constants.TYPE_SONG ? "audio/mp3" : "video/mp4")
+                .setStreamType(type == Constants.TYPE_TORRENT || type == Constants.TYPE_LIVE
+                        ? MediaInfo.STREAM_TYPE_LIVE : MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(mediaMetadata)
                 .build();
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
-    private static void loadLiveChromecast(Context context, String lastContent, String url) {
-        if (!VideoCastManager.getInstance().isConnected()) return;
-        MediaMetadata mediaMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_TV_SHOW);
-        mediaMetadata.putString(MediaMetadata.KEY_TITLE, lastContent);
-        mediaMetadata.putString(MediaMetadata.KEY_SUBTITLE, url);
-        MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
-                .setContentType("video/mp4")
-                .setStreamType(MediaInfo.STREAM_TYPE_LIVE)
-                .setMetadata(mediaMetadata)
-                .build();
-        VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
-    }
-
-    private static void loadFileDownload(Context context, boolean song, String lastContent, String url) {
+    private static void loadFileDownload(Context context, int type, String lastContent, String url) {
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
                 File.separator + "DanaCast" + File.separator + "Downloads" + File.separator +
-                        lastContent + (song ? ".mp3" : ".mp4"));
+                        lastContent + (type == Constants.TYPE_SONG ? ".mp3" : ".mp4"));
         downloadManager.enqueue(request);
     }
 
-    private static void loadFileExternal(Context context, boolean song, String url) {
-        loadFileExternal(context, song, Uri.parse(url));
+    private static void loadFileExternal(Context context, int type, String url) {
+        loadFileExternal(context, type, Uri.parse(url));
     }
 
-    private static void loadFileExternal(Context context, boolean song, Uri uri) {
+    private static void loadFileExternal(Context context, int type, Uri uri) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, song ? "audio/mp3" : "video/mp4");
+        intent.setDataAndType(uri, type == Constants.TYPE_SONG ? "audio/mp3" : "video/mp4");
         context.startActivity(intent);
     }
 
