@@ -78,7 +78,7 @@ public class ContentUtils {
                                 loadFileChromecast(context, entry.getType(), title, url);
                                 break;
                             case 1:
-                                loadFileDownload(context, entry.getType(), title, url);
+                                loadFileDownload(context, title, url);
                                 break;
                             case 2:
                                 addToClipboard(context, url);
@@ -147,12 +147,12 @@ public class ContentUtils {
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
-    private static void loadFileDownload(Context context, int type, String lastContent, String url) {
+    private static void loadFileDownload(Context context, String lastContent, String url) {
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
                 File.separator + "DanaCast" + File.separator + "Downloads" + File.separator +
-                        lastContent + (type == Constants.TYPE_SONG ? ".mp3" : ".mp4"));
+                        lastContent + url.substring(url.lastIndexOf(".")));
         downloadManager.enqueue(request);
     }
 
