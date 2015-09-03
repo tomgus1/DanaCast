@@ -2,11 +2,13 @@ package com.sferadev.danacast.utils;
 
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -152,14 +154,20 @@ public class ContentUtils {
         VideoCastManager.getInstance().startVideoCastControllerActivity(context, mSelectedMedia, 0, true);
     }
 
-    private static void loadFileDownload(Context context, int type, String title, String url) {
-        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+    private static void loadFileDownload(Context context, final int type, String title, String url) {
+        final DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String fileName = !FilenameUtils.isExtension(url, supportedExtensions) ? title +
                 (type == Constants.TYPE_SONG ? ".mp3" : ".mp4") : title + "." + FilenameUtils.getExtension(url);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, File.separator + "DanaCast" +
                 File.separator + "Downloads" + File.separator + fileName);
-        downloadManager.enqueue(request);
+        final long id = downloadManager.enqueue(request);
+        context.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                loadFileExternal(context, type, downloadManager.getUriForDownloadedFile(id));
+            }
+        }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
     private static void loadFileExternal(Context context, int type, String url) {
