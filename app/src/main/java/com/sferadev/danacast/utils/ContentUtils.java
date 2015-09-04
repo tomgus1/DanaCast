@@ -31,6 +31,7 @@ import java.io.IOException;
 public class ContentUtils {
     private static final String[] dialogOptions = {"Chromecast", "Download", "Copy link to the clipboard", "Open in Browser", "Open with..."};
     private static final String[] supportedExtensions = {"mp4", "mp3", "avi", "m3u8", "aac", "wav"};
+    public static String mFilesPath;
 
     public static void loadIntentDialog(final Context context, final String lastContent, final EntryModel entry, final String url) {
         final String[] finalUrl = new String[1];
@@ -185,5 +186,18 @@ public class ContentUtils {
                 context.getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText("simple text", string));
         Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_LONG).show();
+    }
+
+    public static void removeLocalFiles(String folder) {
+        File dir = new File(mFilesPath + folder);
+        if (dir.exists()) {
+            String deleteCmd = "rm -rf " + mFilesPath + folder;
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                runtime.exec(deleteCmd);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

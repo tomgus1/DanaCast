@@ -32,7 +32,7 @@ public class UpdateUtils {
                 }
             }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         } else {
-
+            ContentUtils.removeLocalFiles("Updates");
         }
     }
 
