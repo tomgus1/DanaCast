@@ -27,6 +27,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ContentUtils {
     private static final String[] dialogOptions = {"Chromecast", "Download", "Copy link to the clipboard", "Open in Browser", "Open with..."};
@@ -171,7 +172,7 @@ public class ContentUtils {
         }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
-    private static void loadFileExternal(Context context, int type, String url) {
+    public static void loadFileExternal(Context context, int type, String url) {
         loadFileExternal(context, type, Uri.parse(url));
     }
 
@@ -199,5 +200,17 @@ public class ContentUtils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static ArrayList<EntryModel> listFiles(String folder) {
+        ArrayList<EntryModel> result = new ArrayList<>();
+        File dir = new File(mFilesPath + folder);
+        if (dir.exists()) {
+            File[] files = dir.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                result.add(new EntryModel(Constants.TYPE_FILE, files[i].getName(), files[i].getPath(), null));
+            }
+        }
+        return result;
     }
 }
