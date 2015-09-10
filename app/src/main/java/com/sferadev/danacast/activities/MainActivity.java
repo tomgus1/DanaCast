@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case Constants.TYPE_EPISODE:
                 ArrayList<EntryModel> episodeLinks = Provider.getEpisodeLinks(this, getProvider(), entry.getLink());
                 if (LAST_CONTENT.contains("|")) LAST_CONTENT =
-                        LAST_CONTENT.substring(0, LAST_CONTENT.lastIndexOf("|") - 2);
+                        LAST_CONTENT.substring(0, LAST_CONTENT.lastIndexOf("|") - 1);
                 if (!episodeLinks.isEmpty()) {
                     LAST_CONTENT = LAST_CONTENT + " | " + entry.getTitle();
                     mContent.add(episodeLinks);
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case Constants.TYPE_LINK:
                 ContentUtils.loadIntentDialog(this, LAST_CONTENT.replace("| ", ""),
                         entry, Provider.getExternalLink(this, getProvider(),
-                        entry.getLink()));
+                                entry.getLink()));
                 break;
             case Constants.TYPE_EXTERNAL:
                 NetworkUtils.openChromeTab(this, entry.getLink());
