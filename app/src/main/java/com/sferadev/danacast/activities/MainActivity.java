@@ -231,6 +231,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (mTorrentStream.isStreaming()) mTorrentStream.stopStream();
                 mTorrentStream.startStream(entry.getLink());
                 break;
+            case Constants.TYPE_FILE:
+                ContentUtils.loadFileExternal(this, Constants.TYPE_FILE, entry.getLink());
+                break;
         }
     }
 

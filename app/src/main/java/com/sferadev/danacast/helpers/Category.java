@@ -3,6 +3,7 @@ package com.sferadev.danacast.helpers;
 import com.sferadev.danacast.App;
 import com.sferadev.danacast.R;
 import com.sferadev.danacast.models.EntryModel;
+import com.sferadev.danacast.utils.ContentUtils;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ public class Category {
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_MOVIES], null, null));
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_ANIME], null, null));
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_MUSIC], null, null));
+        items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_DOWNLOADS], null, null));
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_ABOUT], null, null));
         return items;
     }
@@ -42,6 +44,8 @@ public class Category {
             case Constants.CATEGORY_MUSIC:
                 items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_MUSIC163, providerNames[Constants.PROVIDER_MUSIC163], null, null));
                 break;
+            case Constants.CATEGORY_DOWNLOADS:
+                return ContentUtils.listFiles("Downloads");
             case Constants.CATEGORY_ABOUT:
                 items.add(new EntryModel(Constants.TYPE_EXTERNAL, aboutNames[Constants.ABOUT_GOOGLE_PLUS], aboutLinks[Constants.ABOUT_GOOGLE_PLUS], null));
                 items.add(new EntryModel(Constants.TYPE_EXTERNAL, aboutNames[Constants.ABOUT_PAYPAL], aboutLinks[Constants.ABOUT_PAYPAL], null));
