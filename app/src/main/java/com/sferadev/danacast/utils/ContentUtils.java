@@ -141,7 +141,7 @@ public class ContentUtils {
         dialog.show();
     }
 
-    private static void loadFileChromecast(Context context, int type, String title, String url) {
+    public static void loadFileChromecast(Context context, int type, String title, String url) {
         if (!VideoCastManager.getInstance().isConnected()) return;
         MediaMetadata mediaMetadata = new MediaMetadata(type == Constants.TYPE_SONG ?
                 MediaMetadata.MEDIA_TYPE_MUSIC_TRACK : MediaMetadata.MEDIA_TYPE_MOVIE);
@@ -150,7 +150,8 @@ public class ContentUtils {
         MediaInfo mSelectedMedia = new MediaInfo.Builder(url)
                 .setContentType((type == Constants.TYPE_SONG ? "audio/" : "video/") +
                         FilenameUtils.getExtension(url))
-                .setStreamType(type == Constants.TYPE_TORRENT || type == Constants.TYPE_LIVE ? MediaInfo.STREAM_TYPE_LIVE
+                .setStreamType(type == Constants.TYPE_TORRENT || type == Constants.TYPE_FILE
+                        || type == Constants.TYPE_LIVE ? MediaInfo.STREAM_TYPE_LIVE
                         : MediaInfo.STREAM_TYPE_BUFFERED)
                 .setMetadata(mediaMetadata)
                 .build();

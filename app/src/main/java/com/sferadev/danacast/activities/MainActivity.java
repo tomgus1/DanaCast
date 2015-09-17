@@ -38,8 +38,10 @@ import com.sferadev.danacast.utils.ContentUtils;
 import com.sferadev.danacast.utils.NetworkUtils;
 import com.sferadev.danacast.utils.PreferenceUtils;
 import com.sferadev.danacast.utils.UpdateUtils;
+import com.sferadev.danacast.utils.WebServer;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -242,7 +244,19 @@ public class MainActivity extends InstabugAppCompatActivity implements AdapterVi
                 mTorrentStream.startStream(entry.getLink());
                 break;
             case Constants.TYPE_FILE:
-                ContentUtils.loadFileExternal(this, Constants.TYPE_FILE, entry.getLink());
+                if (mCastManager.isConnected()) {
+                    try {
+                        Log.d("Dana", entry.getLink());
+                        new WebServer(entry.getLink()).start();
+                        ContentUtils.loadFileChromecast(this, Constants.TYPE_FILE,
+                                entry.getLink(), "http://" +
+                                        NetworkUtils.getIPAddress(this) + ":8080");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    ContentUtils.loadFileExternal(this, Constants.TYPE_FILE, entry.getLink());
+                }
                 break;
         }
     }
