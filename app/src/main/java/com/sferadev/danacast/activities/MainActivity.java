@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +27,7 @@ import com.github.sv244.torrentstream.listeners.TorrentListener;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
+import com.instabug.library.util.TouchEventDispatcher;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.sferadev.danacast.R;
 import com.sferadev.danacast.helpers.Category;
@@ -56,6 +58,8 @@ public class MainActivity extends InstabugAppCompatActivity implements AdapterVi
 
     private TorrentStream mTorrentStream;
     private ProgressDialog torrentProgressDialog;
+
+    private TouchEventDispatcher dispatcher = new TouchEventDispatcher();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +163,12 @@ public class MainActivity extends InstabugAppCompatActivity implements AdapterVi
                 updateListview();
             }
         }, 2000);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        dispatcher.dispatchTouchEvent(this, ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
