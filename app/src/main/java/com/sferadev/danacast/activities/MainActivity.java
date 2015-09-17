@@ -155,7 +155,7 @@ public class MainActivity extends InstabugAppCompatActivity implements AdapterVi
             @Override
             public void run() {
                 mRefresh.setRefreshing(false);
-                mContent.add(Category.getCategories());
+                //mContent.add(Category.getCategories());
                 updateListview();
             }
         }, 2500);
