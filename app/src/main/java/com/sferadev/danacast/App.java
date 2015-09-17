@@ -26,7 +26,9 @@ public class App extends Application {
                         VideoCastManager.FEATURE_WIFI_RECONNECT |
                         VideoCastManager.FEATURE_DEBUGGING);
 
-        Instabug.initialize(this, "9491098bea83ae038a065edf7284ecee");
+        Instabug.initialize(this, "9491098bea83ae038a065edf7284ecee")
+                .setIsTrackingUserSteps(true)
+                .setIsTrackingCrashes(true);
     }
 
 }
