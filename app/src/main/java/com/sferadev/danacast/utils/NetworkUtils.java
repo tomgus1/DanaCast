@@ -40,7 +40,11 @@ public class NetworkUtils {
             extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, context.getResources().getColor(R.color.colorPrimary));
         }
         intent.putExtras(extras);
-        context.startActivity(intent);
+        try {
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static String getIPAddress(Context context) {
