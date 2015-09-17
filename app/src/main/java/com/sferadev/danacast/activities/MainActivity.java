@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,6 +26,7 @@ import com.github.sv244.torrentstream.listeners.TorrentListener;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
+import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.sferadev.danacast.R;
 import com.sferadev.danacast.helpers.Category;
 import com.sferadev.danacast.helpers.Constants;
@@ -41,7 +41,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
+public class MainActivity extends InstabugAppCompatActivity implements AdapterView.OnItemClickListener,
         SwipeRefreshLayout.OnRefreshListener, TorrentListener {
 
     private VideoCastManager mCastManager;
