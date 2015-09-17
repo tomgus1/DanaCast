@@ -43,6 +43,7 @@ public class Category {
                 break;
             case Constants.CATEGORY_MUSIC:
                 items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_MUSIC163, providerNames[Constants.PROVIDER_MUSIC163], null, null));
+                items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_SOUNDCLOUD, providerNames[Constants.PROVIDER_SOUNDCLOUD], null, null));
                 break;
             case Constants.CATEGORY_DOWNLOADS:
                 return ContentUtils.listFiles("Downloads");

@@ -9,6 +9,7 @@ public class Server {
                 url.contains("nowvideo") ||
                 url.contains("jkmedia") ||
                 url.contains("music") ||
+                url.contains("soundcloud") ||
                 url.contains("m3u8");
     }
 

@@ -9,6 +9,7 @@ import com.sferadev.danacast.providers.Music163;
 import com.sferadev.danacast.providers.Pordede;
 import com.sferadev.danacast.providers.Seriesblanco;
 import com.sferadev.danacast.providers.Seriesyonkis;
+import com.sferadev.danacast.providers.Soundcloud;
 import com.sferadev.danacast.providers.Watchseries;
 import com.sferadev.danacast.providers.Yts;
 import com.sferadev.danacast.providers.Zpeliculas;
@@ -41,6 +42,8 @@ public class Provider {
                 return Jkanime.getSearchResults(query);
             case Constants.PROVIDER_MUSIC163:
                 return Music163.getSearchResults(query);
+            case Constants.PROVIDER_SOUNDCLOUD:
+                return Soundcloud.getSearchResults(query);
         }
         return Category.getCategories();
     }
@@ -75,6 +78,8 @@ public class Provider {
                 return Jkanime.getPopularContent();
             case Constants.PROVIDER_MUSIC163:
                 return Music163.getPopularContent();
+            case Constants.PROVIDER_SOUNDCLOUD:
+                return Soundcloud.getPopularContent();
         }
         return Category.getCategories();
     }
@@ -95,6 +100,8 @@ public class Provider {
                 return Pordede.getEpisodeList(context, url);
             case Constants.PROVIDER_JKANIME:
                 return Jkanime.getEpisodeList(url);
+            case Constants.PROVIDER_SOUNDCLOUD:
+                return Soundcloud.getEpisodeList(url);
         }
         return Category.getCategories();
     }
@@ -160,6 +167,8 @@ public class Provider {
                 return Jkanime.getExternalLink(url);
             case Constants.PROVIDER_MUSIC163:
                 return Music163.getExternalLink(url);
+            case Constants.PROVIDER_SOUNDCLOUD:
+                return Soundcloud.getExternalLink(url);
         }
         return null;
     }

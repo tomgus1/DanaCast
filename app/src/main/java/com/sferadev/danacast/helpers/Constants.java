@@ -34,4 +34,5 @@ public class Constants {
     public static final int PROVIDER_YTS = 7;
     public static final int PROVIDER_JKANIME = 8;
     public static final int PROVIDER_MUSIC163 = 9;
+    public static final int PROVIDER_SOUNDCLOUD = 10;
 }
