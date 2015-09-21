@@ -252,7 +252,7 @@ public class Pordede {
                             .cookies(loginResponse(context).cookies())
                             .followRedirects(true)
                             .execute().url().toExternalForm();
-                } catch (IOException e) {
+                } catch (IOException | IndexOutOfBoundsException e) {
                     e.printStackTrace();
                 }
             }
