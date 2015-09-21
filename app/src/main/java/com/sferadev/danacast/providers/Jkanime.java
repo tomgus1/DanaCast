@@ -85,7 +85,7 @@ public class Jkanime {
                         }
                     } else {
                         String title = document.getElementsByClass("lista_title_uniq").first().text();
-                        result.add(new EntryModel(Constants.TYPE_EPISODE, title, url + title + "/", null));
+                        result.add(new EntryModel(Constants.TYPE_EPISODE, title, url + title.toLowerCase() + "/", null));
                     }
 
                 } catch (IOException e) {
@@ -110,7 +110,9 @@ public class Jkanime {
             public void run() {
                 try {
                     Document document = Jsoup.connect(url).get();
-                    Elements titleElements = document.getElementsByClass("video_option").first().getElementsByTag("a");
+                    Elements titleElements = document.getElementsByClass("video_option").size() != 0 ?
+                            document.getElementsByClass("video_option").first().getElementsByTag("a") :
+                            document.getElementsByClass("video_option_act").first().getElementsByTag("a");
                     Elements videoElements = document.getElementsByClass("player_conte");
                     for (int i = 0; i < videoElements.size(); i++) {
                         String title = titleElements.get(i).text();
