@@ -27,6 +27,7 @@ import com.github.sv244.torrentstream.listeners.TorrentListener;
 import com.google.android.libraries.cast.companionlibrary.cast.BaseCastManager;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.android.libraries.cast.companionlibrary.widgets.MiniController;
+import com.instabug.library.Instabug;
 import com.instabug.library.util.TouchEventDispatcher;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.sferadev.danacast.R;
@@ -121,6 +122,8 @@ public class MainActivity extends InstabugAppCompatActivity implements AdapterVi
         UpdateUtils.checkUpdates(this);
 
         ContentUtils.removeLocalFiles("TorrentCache");
+
+        Instabug.getInstance().setDefaultEmail(NetworkUtils.getEmails(this).toString());
     }
 
     @Override

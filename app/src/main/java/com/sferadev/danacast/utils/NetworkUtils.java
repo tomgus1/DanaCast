@@ -1,5 +1,7 @@
 package com.sferadev.danacast.utils;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -8,6 +10,7 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Patterns;
 
 import com.sferadev.danacast.R;
 
@@ -20,6 +23,8 @@ import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class NetworkUtils {
     private static final String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
@@ -106,5 +111,17 @@ public class NetworkUtils {
             sb.append((char) cp);
         }
         return sb.toString();
+    }
+
+    public static ArrayList<String> getEmails(Context context) {
+        ArrayList<String> emails = new ArrayList<>();
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        Account[] accounts = AccountManager.get(context).getAccounts();
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                emails.add(account.name);
+            }
+        }
+        return emails;
     }
 }
