@@ -77,11 +77,17 @@ public class Jkanime {
             public void run() {
                 try {
                     Document document = Jsoup.connect(url).get();
-                    String[] lastPage = document.getElementsByClass("listnavi").first().lastElementSibling().text().split(" ");
-                    int episodes = Integer.parseInt(lastPage[lastPage.length - 1]);
-                    for (int i = 1; i <= episodes; i++) {
-                        result.add(new EntryModel(Constants.TYPE_EPISODE, "Episode " + i, url + i + "/", null));
+                    if (document.getElementsByClass("lista_title_uniq").size() == 0) {
+                        String[] lastPage = document.getElementsByClass("listnavi").first().lastElementSibling().text().split(" ");
+                        int episodes = Integer.parseInt(lastPage[lastPage.length - 1]);
+                        for (int i = 1; i <= episodes; i++) {
+                            result.add(new EntryModel(Constants.TYPE_EPISODE, "Episode " + i, url + i + "/", null));
+                        }
+                    } else {
+                        String title = document.getElementsByClass("lista_title_uniq").first().text();
+                        result.add(new EntryModel(Constants.TYPE_EPISODE, title, url + title + "/", null));
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
