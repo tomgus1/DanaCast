@@ -51,7 +51,7 @@ public class Category {
                 items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_LIVE_CHANNELS, providerNames[Constants.PROVIDER_LIVE_CHANNELS], null, null));
                 break;
             case Constants.CATEGORY_DOWNLOADS:
-                return ContentUtils.listFiles("Downloads");
+                return ContentUtils.listFiles(ContentUtils.mFilesPath + "Downloads");
             case Constants.CATEGORY_ABOUT:
                 items.add(new EntryModel(Constants.TYPE_EXTERNAL, aboutNames[Constants.ABOUT_GOOGLE_PLUS], aboutLinks[Constants.ABOUT_GOOGLE_PLUS], null));
                 items.add(new EntryModel(Constants.TYPE_EXTERNAL, aboutNames[Constants.ABOUT_PAYPAL], aboutLinks[Constants.ABOUT_PAYPAL], null));

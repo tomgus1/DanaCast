@@ -261,6 +261,10 @@ public class MainActivity extends InstabugAppCompatActivity implements AdapterVi
                     ContentUtils.loadFileExternal(this, Constants.TYPE_FILE, entry.getLink());
                 }
                 break;
+            case Constants.TYPE_FOLDER:
+                mContent.add(ContentUtils.listFiles(entry.getLink()));
+                updateListview();
+                break;
         }
     }
 

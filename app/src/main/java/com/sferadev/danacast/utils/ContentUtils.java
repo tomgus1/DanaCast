@@ -204,14 +204,18 @@ public class ContentUtils {
         }
     }
 
-    public static ArrayList<EntryModel> listFiles(String folder) {
+    public static ArrayList<EntryModel> listFiles(String path) {
         ArrayList<EntryModel> result = new ArrayList<>();
-        File dir = new File(mFilesPath + folder);
+        File dir = new File(path);
         if (dir.exists()) {
             File[] files = dir.listFiles();
             Arrays.sort(files);
             for (int i = 0; i < files.length; i++) {
-                result.add(new EntryModel(Constants.TYPE_FILE, files[i].getName(), files[i].getPath(), null));
+                if (files[i].isFile()) {
+                    result.add(new EntryModel(Constants.TYPE_FILE, files[i].getName(), files[i].getPath(), null));
+                } else if (files[i].isDirectory()) {
+                    result.add(new EntryModel(Constants.TYPE_FOLDER, files[i].getName(), files[i].getPath(), null));
+                }
             }
         }
         return result;

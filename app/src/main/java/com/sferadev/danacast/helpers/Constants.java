@@ -12,6 +12,7 @@ public class Constants {
     public static final int TYPE_TORRENT = 8;
     public static final int TYPE_LIVE = 9;
     public static final int TYPE_FILE = 10;
+    public static final int TYPE_FOLDER = 11;
 
     public static final int CATEGORY_SHOWS = 0;
     public static final int CATEGORY_MOVIES = 1;
