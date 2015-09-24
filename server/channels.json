@@ -1,5 +1,29 @@
 [
   {
+    "name": "Spain: TV3",
+    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+  },
+  {
+    "name": "Sport 1",
+    "url": "http://193.176.251.228:8000/Sport1"
+  },
+  {
+    "name": "TV3",
+    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+  },
+  {
+    "name": "TV3",
+    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+  },
+  {
+    "name": "TV3",
+    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+  },
+  {
+    "name": "TV3",
+    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+  },
+  {
     "name": "TV3",
     "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
   }
