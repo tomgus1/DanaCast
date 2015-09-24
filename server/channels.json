@@ -1,30 +1,50 @@
 [
   {
+    "name": "Spain: Antena 3",
+    "url": "http://antena3-aos1-apple-live.adaptive.level3.net/apple/antena3/channel01/antena_3_hd_1548K_1280x720_main.m3u8"
+  },
+  {
+    "name": "Spain: LaSexta",
+    "url": "http://antena3-aos1-apple-live.adaptive.level3.net/apple/antena3/channel02/la_sexta_hd_1548K_1280x720_main.m3u8"
+  },
+  {
     "name": "Spain: TV3",
     "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
   },
   {
-    "name": "Sport 1",
-    "url": "http://193.176.251.228:8000/Sport1"
+    "name": "Spain: Telemadrid",
+    "url": "http://iphone.telemadrid.es.edgesuite.net/telemadridsat_iphone.m3u8"
   },
   {
-    "name": "TV3",
-    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+    "name": "Spain: 24 Horas",
+    "url": "http://iphonelive.rtve.es/24H_LV3_IPH/bitrate_1.m3u8"
   },
   {
-    "name": "TV3",
-    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+    "name": "Italy: Rai Movie",
+    "url": "http://stream10.rai.it/italy/raimovie.smil/playlist.m3u8"
   },
   {
-    "name": "TV3",
-    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+    "name": "Italy: Rai Premium",
+    "url": "http://originstream10.rai.it/italy/raipremium.smil/playlist.m3u8"
   },
   {
-    "name": "TV3",
-    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+    "name": "Italy: Rai Gulp",
+    "url": "http://stream7.rai.it/italy/smil:raigulp.smil/playlist.m3u8"
   },
   {
-    "name": "TV3",
-    "url": "http://ccma-tva-int-abertis-live.hls.adaptive.level3.net/int/ngrp:tv3_web/playlist.m3u8"
+    "name": "Italy: Rai YoYo",
+    "url": "http://stream5.rai.it/italy/smil:raiyoyo.smil/playlist.m3u8"
+  },
+  {
+    "name": "Italy: Rai Storia",
+    "url": "http://stream5.rai.it/italy/smil:raistoria.smil/playlist.m3u8"
+  },
+  {
+    "name": "Italy: Rai Seuola",
+    "url": "http://stream6.rai.it/italy/smil:raiscuola.smil/playlist.m3u8"
+  },
+  {
+    "name": "Italy: Rai News",
+    "url": "http://everyrai-lh.akamaihd.net/i/rainews_1@127119/master.m3u8"
   }
 ]
