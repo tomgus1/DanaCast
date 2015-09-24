@@ -37,4 +37,5 @@ public class Constants {
     public static final int PROVIDER_MUSIC163 = 9;
     public static final int PROVIDER_SOUNDCLOUD = 10;
     public static final int PROVIDER_LIVE_STATIONS = 11;
+    public static final int PROVIDER_LIVE_CHANNELS = 12;
 }

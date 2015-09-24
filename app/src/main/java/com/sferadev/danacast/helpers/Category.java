@@ -48,6 +48,7 @@ public class Category {
                 break;
             case Constants.CATEGORY_LIVE:
                 items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_LIVE_STATIONS, providerNames[Constants.PROVIDER_LIVE_STATIONS], null, null));
+                items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_LIVE_CHANNELS, providerNames[Constants.PROVIDER_LIVE_CHANNELS], null, null));
                 break;
             case Constants.CATEGORY_DOWNLOADS:
                 return ContentUtils.listFiles("Downloads");
