@@ -1,0 +1,230 @@
+[
+  {
+    "name": "Cadena 100",
+    "url": "http://195.10.10.223/cope/cadena100.mp3"
+  },
+  {
+    "name": "Cadena COPE",
+    "url": "http://195.55.74.210/cope/net1-low.mp3"
+  },
+  {
+    "name": "Cadena COPE: Madrid",
+    "url": "http://195.55.74.212/copesedes/madrid.mp3"
+  },
+  {
+    "name": "Cadena Dial",
+    "url": "http://4633.live.streamtheworld.com/CADENADIAL_SC"
+  },
+  {
+    "name": "Cadena Ser",
+    "url": "http://77.67.34.11/CADENASER.mp3"
+  },
+  {
+    "name": "Cadena Ser: Alcoy",
+    "url": "http://radioalcoy.emisorasonline.com:8011/stream"
+  },
+  {
+    "name": "Cadena Ser: Baleares",
+    "url": "http://63.243.149.5/SER_MALLORCA.mp3"
+  },
+  {
+    "name": "Cadena Ser: Henares",
+    "url": "http://emisoras.cadenaser.com:8085/alcala"
+  },
+  {
+    "name": "Cadena Ser: Madrid Oeste",
+    "url": "http://emisoras.cadenaser.com:8085/mostoles"
+  },
+  {
+    "name": "esRadio",
+    "url": "http://livestreaming.esradio.fm/stream64.mp3"
+  },
+  {
+    "name": "Europa FM: Gipuzkoa",
+    "url": "http://stream.irratia.net/1b"
+  },
+  {
+    "name": "Fun Radio: Ambient",
+    "url": "http://5.39.66.128:8007/live"
+  },
+  {
+    "name": "Fun Radio: ChillOut",
+    "url": "http://5.39.66.128:8002/live"
+  },
+  {
+    "name": "Fun Radio: Dubstep",
+    "url": "http://5.39.66.128:8001/live"
+  },
+  {
+    "name": "Fun Radio: Dance Fun",
+    "url": "http://5.39.66.128:8004/live"
+  },
+  {
+    "name": "Fun Radio: Latino Fun",
+    "url": "http://5.39.66.128:8012/live"
+  },
+  {
+    "name": "Fun Radio: Hard",
+    "url": "http://5.39.66.128:8003/live"
+  },
+  {
+    "name": "Fun Radio: TechHouse",
+    "url": "http://5.39.66.128:8008/live"
+  },
+  {
+    "name": "Fun Radio: ProgHouse",
+    "url": "http://5.39.66.128:8011/live"
+  },
+  {
+    "name": "Fun Radio: Remember",
+    "url": "http://5.39.66.128:8006/live"
+  },
+  {
+    "name": "Fun Radio: Vintage",
+    "url": "http://5.39.66.128:8000/live"
+  },
+  {
+    "name": "Fun Radio: Campus",
+    "url": "http://audio-online.net:8015/live"
+  },
+  {
+    "name": "Onda Cero: Madrid Norte",
+    "url": "http://streaming-live.es:8005/live?type=flash"
+  },
+  {
+    "name": "Onda Cero: Noroeste Murcia",
+    "url": "http://stream.ondaceronoroeste.es/ondacero-64.mp3?1396893968930.mp3"
+  },
+  {
+    "name": "RNE",
+    "url": "http://rne.rtveradio.cires21.com/rne/mp3/icecast.audio?rnd=246761"
+  },
+  {
+    "name": "Radio Clasica",
+    "url": "http://radioclasica.rtveradio.cires21.com/radioclasica/mp3/icecast.audio"
+  },
+  {
+    "name": "Radio 3",
+    "url": "http://radio3.rtveradio.cires21.com/radio3/mp3/icecast.audio"
+  },
+  {
+    "name": "Radio 4",
+    "url": "http://radio4.rtveradio.cires21.com/radio4/mp3/icecast.audio"
+  },
+  {
+    "name": "Radio 5",
+    "url": "http://radio5.rtveradio.cires21.com/radio5/mp3/icecast.audio"
+  },
+  {
+    "name": "Radio Exterior",
+    "url": "http://radioexterior.rtveradio.cires21.com/radioexterior/mp3/icecast.audio"
+  },
+  {
+    "name": "Rock FM",
+    "url": "http://195.55.74.224/cope/rockfm.mp3"
+  },
+  {
+    "name": "Cadena Fiesta Radio",
+    "url": "http://195.10.10.224/rtva/canalfiestaradio_master.mp3?GKID=ee37938ccccb11e3824800163ea2c744&fspref=aHR0cDovL2FsYWNhcnRhLmNhbmFsc3VyLmVzL21lZGlhL3N3Zi9wbGF5ZXJfbGl2ZS9wbGF5ZXIuc3dm"
+  },
+  {
+    "name": "Canal Carnaval Sur",
+    "url": "http://195.10.10.206/rtva/radioandalucia_backup.mp3"
+  },
+  {
+    "name": "Chanquete FM",
+    "url": "http://92.48.107.35:8008/"
+  },
+  {
+    "name": "Flamenco Radio",
+    "url": "http://195.10.10.224/rtva/canalflamenco.mp3?GKID=b3645caccccd11e3adda00163e914f69&fspref=aHR0cDovL2FsYWNhcnRhLmNhbmFsc3VyLmVzL21lZGlhL3N3Zi9wbGF5ZXJfbGl2ZS9wbGF5ZXIuc3dm"
+  },
+  {
+    "name": "Formula 30",
+    "url": "http://87.106.173.138:8005/formula30.mp3"
+  },
+  {
+    "name": "Sevilla F.C. Radio",
+    "url": "http://sevillafcradio.lcinternet.com:8010/stream"
+  },
+  {
+    "name": "RTPA",
+    "url": "http://195.10.10.206/rtpa/live/radio.mp3?GKID=948f33bcccd011e3adda00163e914"
+  },
+  {
+    "name": "IB3",
+    "url": "http://streaming01.ib3radio.com:8000/ib3radio.mp3?1398468471082.mp3"
+  },
+  {
+    "name": "Ibiza Sonica",
+    "url": "http://stream2.wft.es:1025/"
+  },
+  {
+    "name": "Radio Illa",
+    "url": "http://srv0435.lcinternet.com:9512/stream"
+  },
+  {
+    "name": "7.7 Radio",
+    "url": "http://srv0411.lcinternet.com:9004/stream"
+  },
+  {
+    "name": "Radio CLM",
+    "url": "http://176.31.245.161:8017/stream"
+  },
+  {
+    "name": "Onda Cantabria",
+    "url": "http://srv0435.lcinternet.com:9509/stream"
+  },
+  {
+    "name": "Radio Flow",
+    "url": "http://giss.tv:8001/radioflow992.mp3"
+  },
+  {
+    "name": "Radio Arrebato",
+    "url": "http://srv0510.emisorasonline.com:8025/stream"
+  },
+  {
+    "name": "RM Radio",
+    "url": "http://radiorm2-adswizz.grupott.stream.flumotion.com/gtt/radiorm2.mp3"
+  },
+  {
+    "name": "Radio Aranda (Cadena SER)",
+    "url": "http://94.75.206.136:8135/live"
+  },
+  {
+    "name": "Flaix FM",
+    "url": "http://195.10.10.225/flaix/shoutcastmp3.mp3"
+  },
+  {
+    "name": "Flaix BAC",
+    "url": "http://195.10.10.225/flaix/shoutcast2.mp3"
+  },
+  {
+    "name": "Radio Teletaxi",
+    "url": "http://radioteletaxi2-adswizz.grupott.stream.flumotion.com/gtt/radioteletaxi2.mp3"
+  },
+  {
+    "name": "Globo FM",
+    "url": "http://stereo.wavestreamer.com:7165/stream/1/"
+  },
+  {
+    "name": "Holiday Gym Radio",
+    "url": "http://prositel1.com:9001/holidaygym"
+  },
+  {
+    "name": "Radio Libertad",
+    "url": "http://ciberdomainc07.com:9000/live?1398472394260.mp3"
+  },
+  {
+    "name": "Radio Gandia",
+    "url": "http://176.31.239.83:8675/stream"
+  },
+  {
+    "name": "Radio Fusion",
+    "url": "http://srv0411.lcinternet.com:9005/stream"
+  },
+  {
+    "name": "Voz FM",
+    "url": "http://giss.tv:8001/radiovozfm02.mp3"
+  }
+]
