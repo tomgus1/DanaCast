@@ -17,6 +17,7 @@
         <item>Movies</item>
         <item>Anime</item>
         <item>Music</item>
+        <item>Live</item>
         <item>Downloads</item>
         <item>About</item>
     </string-array>
@@ -33,5 +34,6 @@
         <item>JKAnime</item>
         <item>Music163</item>
         <item>Soundcloud</item>
+        <item>Radio Stations</item>
     </string-array>
 </resources>

@@ -17,8 +17,9 @@ public class Constants {
     public static final int CATEGORY_MOVIES = 1;
     public static final int CATEGORY_ANIME = 2;
     public static final int CATEGORY_MUSIC = 3;
-    public static final int CATEGORY_DOWNLOADS = 4;
-    public static final int CATEGORY_ABOUT = 5;
+    public static final int CATEGORY_LIVE = 4;
+    public static final int CATEGORY_DOWNLOADS = 5;
+    public static final int CATEGORY_ABOUT = 6;
 
     public static final int ABOUT_GOOGLE_PLUS = 0;
     public static final int ABOUT_PAYPAL = 1;
@@ -35,4 +36,5 @@ public class Constants {
     public static final int PROVIDER_JKANIME = 8;
     public static final int PROVIDER_MUSIC163 = 9;
     public static final int PROVIDER_SOUNDCLOUD = 10;
+    public static final int PROVIDER_LIVE_STATIONS = 11;
 }

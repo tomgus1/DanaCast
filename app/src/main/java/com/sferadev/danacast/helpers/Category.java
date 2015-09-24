@@ -15,6 +15,7 @@ public class Category {
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_MOVIES], null, null));
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_ANIME], null, null));
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_MUSIC], null, null));
+        items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_LIVE], null, null));
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_DOWNLOADS], null, null));
         items.add(new EntryModel(Constants.TYPE_CATEGORY, categoryNames[Constants.CATEGORY_ABOUT], null, null));
         return items;
@@ -44,6 +45,9 @@ public class Category {
             case Constants.CATEGORY_MUSIC:
                 items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_MUSIC163, providerNames[Constants.PROVIDER_MUSIC163], null, null));
                 items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_SOUNDCLOUD, providerNames[Constants.PROVIDER_SOUNDCLOUD], null, null));
+                break;
+            case Constants.CATEGORY_LIVE:
+                items.add(new EntryModel(Constants.TYPE_PROVIDER, Constants.PROVIDER_LIVE_STATIONS, providerNames[Constants.PROVIDER_LIVE_STATIONS], null, null));
                 break;
             case Constants.CATEGORY_DOWNLOADS:
                 return ContentUtils.listFiles("Downloads");

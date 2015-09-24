@@ -10,7 +10,12 @@ public class Server {
                 url.contains("jkmedia") ||
                 url.contains("music") ||
                 url.contains("soundcloud") ||
-                url.contains("m3u8");
+                url.contains("m3u8") ||
+                url.contains("mp3") ||
+                url.contains("radio") ||
+                url.contains("emisoras") ||
+                url.contains("live") ||
+                url.contains("stream");
     }
 
     public static String getVideoPath(String url) {
