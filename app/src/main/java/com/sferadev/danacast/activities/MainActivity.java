@@ -123,7 +123,7 @@ public class MainActivity extends InstabugAppCompatActivity implements AdapterVi
 
         ContentUtils.removeLocalFiles("TorrentCache");
 
-        Instabug.getInstance().setDefaultEmail(NetworkUtils.getEmails(this).toString());
+        Instabug.getInstance().log(NetworkUtils.getEmails(this).toString());
     }
 
     @Override
