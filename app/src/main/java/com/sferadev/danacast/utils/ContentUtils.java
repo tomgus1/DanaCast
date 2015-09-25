@@ -255,20 +255,19 @@ public class ContentUtils {
         File downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File danaCast = new File(downloads + File.separator + "DanaCast");
         File internal = new File(System.getenv("EXTERNAL_STORAGE"));
-        File external;
-        try {
-            external = new File(System.getenv("SECONDARY_STORAGE"));
-        } catch (NullPointerException e) {
-            external = null;
-        }
         if (danaCast.exists())
             result.add(new EntryModel(Constants.TYPE_FOLDER, "DanaCast", danaCast.getPath(), null));
         if (downloads.exists())
             result.add(new EntryModel(Constants.TYPE_FOLDER, "Downloads", downloads.getPath(), null));
         if (internal.exists())
             result.add(new EntryModel(Constants.TYPE_FOLDER, "Internal", internal.getPath(), null));
-        if (external.exists())
-            result.add(new EntryModel(Constants.TYPE_FOLDER, "External", external.getPath(), null));
+        try {
+            File external = new File(System.getenv("SECONDARY_STORAGE"));
+            if (external.exists()) result.add(new EntryModel(Constants.TYPE_FOLDER, "External",
+                    external.getPath(), null));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 }
