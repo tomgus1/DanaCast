@@ -225,12 +225,17 @@ public class ContentUtils {
             Arrays.sort(files, new Comparator<File>() {
                 @Override
                 public int compare(File o1, File o2) {
-                    if (o1.getName().length() > o2.getName().length()) {
+                    if (o1.isDirectory() && !o2.isDirectory()) {
+                        return -1;
+                    } else if (!o1.isDirectory() && o2.isDirectory()) {
+                        return 1;
+                    } else if (o1.getName().length() > o2.getName().length()) {
                         return 1;
                     } else if (o1.getName().length() < o2.getName().length()) {
                         return -1;
+                    } else {
+                        return o1.getName().compareTo(o2.getName());
                     }
-                    return o1.getName().compareTo(o2.getName());
                 }
             });
             for (int i = 0; i < files.length; i++) {
