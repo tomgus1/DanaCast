@@ -220,4 +220,18 @@ public class ContentUtils {
         }
         return result;
     }
+
+    public static ArrayList<EntryModel> listPartitions() {
+        ArrayList<EntryModel> result = new ArrayList<>();
+        File internal = new File(System.getenv("EXTERNAL_STORAGE"));
+        if (internal.exists())
+            result.add(new EntryModel(Constants.TYPE_FOLDER, "Internal", internal.getPath(), null));
+        File external = new File(System.getenv("SECONDARY_STORAGE"));
+        if (external.exists())
+            result.add(new EntryModel(Constants.TYPE_FOLDER, "External", external.getPath(), null));
+        File downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        if (downloads.exists())
+            result.add(new EntryModel(Constants.TYPE_FOLDER, "Downloads", downloads.getPath(), null));
+        return result;
+    }
 }
