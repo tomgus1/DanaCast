@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class ContentUtils {
     private static final String[] dialogOptions = {"Chromecast", "Download", "Copy link to the clipboard", "Open in Browser", "Open with..."};
@@ -209,7 +210,17 @@ public class ContentUtils {
         File dir = new File(path);
         if (dir.exists()) {
             File[] files = dir.listFiles();
-            Arrays.sort(files);
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File o1, File o2) {
+                    if (o1.getName().length() > o2.getName().length()) {
+                        return 1;
+                    } else if (o1.getName().length() < o2.getName().length()) {
+                        return -1;
+                    }
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
             for (int i = 0; i < files.length; i++) {
                 if (files[i].isFile()) {
                     if (FilenameUtils.isExtension(files[i].getName(), supportedExtensions))
