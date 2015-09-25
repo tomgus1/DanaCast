@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.github.sv244.torrentstream.Torrent;
@@ -27,7 +28,6 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -180,18 +180,18 @@ public class ContentUtils {
         loadFileExternal(context, type, Uri.parse(url));
     }
 
-    private static void loadFileExternal(Context context, int type, Uri uri) {
+    public static void loadFileExternal(Context context, int type, Uri uri) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(uri);
         switch (type) {
             case Constants.TYPE_SONG:
-                intent.setType("audio/*");
+                intent.setDataAndType(uri, "audio/*");
                 break;
             case Constants.TYPE_FILE:
-                intent.setType(URLConnection.guessContentTypeFromName(uri.toString()));
+                String ext = uri.getPath().substring(uri.getPath().lastIndexOf('.') + 1).toLowerCase();
+                intent.setDataAndType(uri, MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext));
                 break;
             default:
-                intent.setType("video/*");
+                intent.setDataAndType(uri, "video/*");
                 break;
         }
         context.startActivity(intent);

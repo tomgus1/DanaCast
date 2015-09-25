@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -258,7 +259,7 @@ public class MainActivity extends InstabugAppCompatActivity implements AdapterVi
                         e.printStackTrace();
                     }
                 } else {
-                    ContentUtils.loadFileExternal(this, Constants.TYPE_FILE, entry.getLink());
+                    ContentUtils.loadFileExternal(this, Constants.TYPE_FILE, Uri.fromFile(new File(entry.getLink())));
                 }
                 break;
             case Constants.TYPE_FOLDER:
