@@ -212,6 +212,7 @@ public class ContentUtils {
             Arrays.sort(files);
             for (int i = 0; i < files.length; i++) {
                 if (files[i].isFile()) {
+                    if (FilenameUtils.isExtension(files[i].getName(), supportedExtensions))
                     result.add(new EntryModel(Constants.TYPE_FILE, files[i].getName(), files[i].getPath(), null));
                 } else if (files[i].isDirectory()) {
                     result.add(new EntryModel(Constants.TYPE_FOLDER, files[i].getName(), files[i].getPath(), null));
