@@ -27,6 +27,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -181,7 +182,18 @@ public class ContentUtils {
 
     private static void loadFileExternal(Context context, int type, Uri uri) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, type == Constants.TYPE_SONG ? "audio/*" : "video/*");
+        intent.setData(uri);
+        switch (type) {
+            case Constants.TYPE_SONG:
+                intent.setType("audio/*");
+                break;
+            case Constants.TYPE_FILE:
+                intent.setType(URLConnection.guessContentTypeFromName(uri.toString()));
+                break;
+            default:
+                intent.setType("video/*");
+                break;
+        }
         context.startActivity(intent);
     }
 
